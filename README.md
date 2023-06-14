@@ -8,6 +8,7 @@ python3.7 + torch 1.8.1 (cuda10.2) + torch_geometric 1.7.2 + ogb1.3.6
 Else:
 
 The following two environments both work:
+
 python3.9 + torch 1.12.1 (cuda11.6) + torch_geometric 2.2.0 + ogb1.3.5
 
 python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
