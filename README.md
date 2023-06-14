@@ -32,10 +32,10 @@ python  main_gnn_CoraCiteseerPubmed.py  --data_name cora  --gnn_model GCN --lr 0
 ```
 
 
-example to run cora under the existing setting for ogbl-collab, ogbl-ppa, ogbl-citation2
-```
+<!-- example to run cora under the existing setting for ogbl-collab, ogbl-ppa, ogbl-citation2 -->
+<!-- ```
 python NeighborOverlap.py   --xdp 0.4 --tdp 0.0 --pt 0.75 --gnnedp 0.0 --preedp 0.0 --predp 0.55 --gnndp 0.75  --probscale 6.5 --proboffset 4.4 --alpha 0.4  --gnnlr 0.0085 --prelr 0.0078  --batch_size 384  --ln --lnnn --predictor $model --dataset Citeseer  --epochs 100 --runs 10 --model puregcn --hiddim 256 --mplayers 1  --testbs 4096  --maskinput  --jk  --use_xlin  --tailact  --twolayerlin
-```
+``` -->
 
 
 
