@@ -1,0 +1,41 @@
+
+# output_dir: output/cora/nbfnet
+
+dataset:
+  class: pubmed
+  root: ~/datasets/homogeneous/
+
+model:
+  class: NBFNet
+  # input_dim: 64
+  # hidden_dims: [32, 32, 32, 32, 32, 32]
+  # dropout: 0.1
+  message_func: distmult
+  aggregate_func: pna
+  short_cut: yes
+  layer_norm: yes
+  dependent: yes
+  remove_one_hop: no
+
+task:
+  num_negative: 1
+  strict_negative: yes
+  adversarial_temperature: 0.5
+  metric: [mr, mrr, hits@1, hits@3, hits@10]
+
+optimizer:
+  class: Adam
+  # lr: 5.0e-3
+  # weight_decay: 0.
+
+train:
+  gpus: {{ gpus }}
+  batch_size: 16
+  num_epoch: 20
+  log_interval: 100
+  runs: 1
+  eval_metric: 'MRR'
+  kill_cnt: 20
+
+
+
