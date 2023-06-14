@@ -13,11 +13,6 @@ python3.9 + torch 1.12.1 (cuda11.6) + torch_geometric 2.2.0 + ogb1.3.5
 python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
 
 
-**Prepare Datasets**
-
-```
-python ogbdataset.py
-```
 
 **Reproduce Results**
 
