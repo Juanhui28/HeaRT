@@ -1,5 +1,6 @@
 # HeaRT
 
+Official code for the paper "Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking".
 
 
 ## Installation
