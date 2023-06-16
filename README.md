@@ -2,7 +2,8 @@
 
 
 
-## Environment
+## Installation
+
 
 For PEG:
 
@@ -17,15 +18,11 @@ python3.9 + torch 1.12.1 (cuda11.6) + torch_geometric 2.2.0 + ogb1.3.5
 
 python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
 
-## Directories
 
-- exist_setting_small: running files for cora, citeseer, and pubmed under the existing setting
-- exist_setting_ogb: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under the existing setting
-- exist_setting_ddi: running files for ogbl-ddi under the existing setting
-- HeaRT_small: running files for cora, citeseer, and pubmed under HeaRT
-- HeaRT_ogb: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under HeaRT
-- HeaRT_ddi: running files for ogbl-ddi under HeaRT
 
+## Download Data
+
+https://cse.msu.edu/~shomerha/HeaRT-Data/
 
 ## Reproduce Results
 
