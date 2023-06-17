@@ -117,7 +117,7 @@ def save_results(dataset, sparse_adj, alpha, eps, split=None, val=False):
     Saved in `data/ppr/{dataset}/` folder
     """
     root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
-    dataset_dir = os.path.join(root_dir, "data", "ppr", dataset)
+    dataset_dir = os.path.join(root_dir, "dataset", dataset)
     os.makedirs(dataset_dir, exist_ok=True)
 
     is_val = "_val" if val else ""

@@ -94,7 +94,7 @@ def main():
 
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--remove', action='store_true', default=False)
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     
 

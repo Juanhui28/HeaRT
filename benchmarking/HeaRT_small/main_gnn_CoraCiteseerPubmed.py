@@ -20,7 +20,7 @@ from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
 
-log_print		= get_logger('testrun', 'log', '../config/')
+log_print		= get_logger('testrun', 'log', get_config_dir())
 def read_data(data_name, dir_path, filename):
     data_name = data_name
 
@@ -268,7 +268,7 @@ def main():
     parser.add_argument('--runs', type=int, default=10)
     parser.add_argument('--kill_cnt',           dest='kill_cnt',      default=10,    type=int,       help='early stopping')
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--l2',		type=float,             default=0.0,			help='L2 Regularization for Optimizer')
     parser.add_argument('--seed', type=int, default=999)

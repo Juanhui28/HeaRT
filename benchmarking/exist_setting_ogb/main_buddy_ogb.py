@@ -20,7 +20,7 @@ import argparse
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 from baseline_models.BUDDY.utils import filter_by_year
 
-log_print		= get_logger('testrun', 'log', '../config/')
+log_print = get_logger('testrun', 'log', get_config_dir())
 
 
 def get_data(args):

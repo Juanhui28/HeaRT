@@ -20,8 +20,8 @@ from utils import *
 from torch_sparse import SparseTensor
 import scipy.sparse as ssp
 
-dir_path = '.'
-log_print		= get_logger('testrun', 'log', '../config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 
 def read_data(data_name):

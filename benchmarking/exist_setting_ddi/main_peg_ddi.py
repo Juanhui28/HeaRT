@@ -1,6 +1,7 @@
 import sys
 sys.path.append("..") 
 import argparse
+from utils import *
 
 import torch
 import torch.nn.functional as F
@@ -28,8 +29,8 @@ from baseline_models.PEG.Graph_embedding import DeepWalk
 import os
 import tensorflow
 
-dir_path = '..'
-log_print		= get_logger('testrun', 'log', dir_path+'/config/')
+dir_path  = get_data_dir()
+log_print = get_logger('testrun', 'log', get_config_dir())
 #modified from: https://github.com/snap-stanford/ogb/tree/master/examples/linkproppred/ddi
 
 def get_metric_score(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred, neg_val_pred, pos_test_pred, neg_test_pred):

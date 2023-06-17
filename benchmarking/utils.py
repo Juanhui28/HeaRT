@@ -1,10 +1,21 @@
-
+import os
 import torch
 import numpy as np
 import random
 import json, logging, sys
 import math
 import logging.config 
+
+
+def get_data_dir():
+    file_dir = os.path.dirname(os.path.realpath(__file__))
+    return os.path.join("..", file_dir, "dataset")
+
+
+def get_config_dir():
+    file_dir = os.path.dirname(os.path.realpath(__file__))
+    return os.path.join(file_dir, "config")
+
 
 def init_seed(seed=2020):
     np.random.seed(seed)

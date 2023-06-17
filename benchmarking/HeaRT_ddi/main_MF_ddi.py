@@ -14,8 +14,8 @@ from utils import *
 
 import numpy as np
 
-dir_path = '..'
-log_print		= get_logger('testrun', 'log', dir_path+'/config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 def init_seed(seed=2020):
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -171,7 +171,7 @@ def main():
     parser.add_argument('--kill_cnt', type=int, default=20)
     parser.add_argument('--save', action='store_true', default=False)
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--test_batch_size', type=int, default=4096)
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')

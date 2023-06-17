@@ -19,7 +19,7 @@ from torch.utils.data import DataLoader
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
-log_print		= get_logger('testrun', 'log', '../config/')
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def get_data(args):
 
@@ -65,7 +65,7 @@ def read_data( data_name):
     train_pos, valid_pos, test_pos = [], [], []
     train_neg, valid_neg, test_neg = [], [], []
     node_set = set()
-    dir_path = '.'
+    dir_path = get_data_dir()
     
     for split in ['train', 'test', 'valid']:
 

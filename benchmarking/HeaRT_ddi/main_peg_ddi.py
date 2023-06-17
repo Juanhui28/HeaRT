@@ -28,8 +28,8 @@ from baseline_models.PEG.Graph_embedding import DeepWalk
 import os
 import tensorflow
 
-dir_path = '..'
-log_print		= get_logger('testrun', 'log', dir_path+'/config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 #modified from: https://github.com/snap-stanford/ogb/tree/master/examples/linkproppred/ddi
 
 def get_metric_score(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred, neg_val_pred, pos_test_pred, neg_test_pred):
@@ -265,7 +265,7 @@ def main():
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--save', action='store_true', default=False)
 
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--test_batch_size', type=int, default=4096)

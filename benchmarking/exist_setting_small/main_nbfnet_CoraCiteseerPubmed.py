@@ -30,8 +30,8 @@ import argparse
 separator = ">" * 30
 line = "-" * 30
 
-dir_path = '.'
-log_print		= get_logger('testrun', 'log', '../config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def read_data(data_name, neg_mode):
     data_name = data_name

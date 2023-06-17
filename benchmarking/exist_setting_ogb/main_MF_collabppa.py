@@ -14,8 +14,8 @@ from utils import *
 
 import numpy as np
 
-dir_path = '..'
-log_print		= get_logger('testrun', 'log', dir_path+'/config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 def init_seed(seed=2020):
     np.random.seed(seed)
     torch.manual_seed(seed)

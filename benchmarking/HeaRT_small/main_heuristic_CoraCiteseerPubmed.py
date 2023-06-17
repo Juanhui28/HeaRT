@@ -26,9 +26,12 @@ from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 
 from get_heuristic import *
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
+from utils import*
 
 
-dir_path = '.'
+dir_path = get_data_dir()
+
+
 def read_data(data_name, dir_path, filename):
     data_name = data_name
 
@@ -147,7 +150,7 @@ def main():
     parser.add_argument('--neg_mode', type=str, default='equal')
     parser.add_argument('--use_heuristic', type=str, default='katz_apro')
     parser.add_argument('--use_valedges_as_input', action='store_true', default=False)
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
 
     parser.add_argument('--beta', type=float, default='0.005')

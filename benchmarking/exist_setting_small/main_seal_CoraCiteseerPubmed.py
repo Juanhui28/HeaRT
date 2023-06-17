@@ -25,8 +25,8 @@ import time
 from gnn_model import *
 from torch.nn import BCEWithLogitsLoss
 
-dir_path = '.'
-log_print		= get_logger('testrun', 'log', '../config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 
 

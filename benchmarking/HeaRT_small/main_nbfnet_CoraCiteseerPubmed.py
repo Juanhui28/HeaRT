@@ -17,6 +17,7 @@ import scipy.sparse as ssp
 
 from baseline_models.nbfnet import tasks, util, datasets
 from baseline_models.nbfnet.util import detect_variables, literal_eval
+from utils import*
 
 from torch_sparse import SparseTensor
 
@@ -33,8 +34,8 @@ from torch_geometric.data import DataLoader
 separator = ">" * 30
 line = "-" * 30
 
-dir_path = '.'
-log_print		= get_logger('testrun', 'log', '../config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def read_data(data_name, dir_path, filename):
     data_name = data_name
@@ -336,7 +337,7 @@ def parse_args():
     parser.add_argument('--dropout', type=float, default=0.1) 
     parser.add_argument('--hidden_dims',  nargs='+', type=int, default=32)
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--num_epoch', type=int, default=64)

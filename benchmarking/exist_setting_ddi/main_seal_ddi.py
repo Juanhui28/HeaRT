@@ -30,8 +30,8 @@ from gnn_model import *
 from torch.nn import BCEWithLogitsLoss
 from utils import *
 
-dir_path = '..'
-log_print		= get_logger('testrun', 'log', dir_path+'/config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 
 
 

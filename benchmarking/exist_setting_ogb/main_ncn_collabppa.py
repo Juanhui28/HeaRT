@@ -16,6 +16,8 @@ from torch_geometric.utils import negative_sampling
 from torch.utils.tensorboard import SummaryWriter
 import time
 
+from utils import get_data_dir, get_config_dir
+
 from typing import Iterable
 import random
 

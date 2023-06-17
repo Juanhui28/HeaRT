@@ -19,8 +19,8 @@ from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
-dir_path = '.'
-log_print		= get_logger('testrun', 'log', '../config/')
+dir_path = get_data_dir()
+log_print		= get_logger('testrun', 'log', get_config_dir())
 def read_data(data_name, neg_mode):
     data_name = data_name
 

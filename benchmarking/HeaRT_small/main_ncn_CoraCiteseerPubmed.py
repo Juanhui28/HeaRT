@@ -15,7 +15,7 @@ from torch_geometric.utils import train_test_split_edges, negative_sampling, to_
 from torch_geometric.datasets import Planetoid
 from torch.utils.tensorboard import SummaryWriter
 from baseline_models.NCN.util import PermIterator
-from utils import init_seed, Logger, save_emb, get_logger
+from utils import init_seed, Logger, save_emb, get_logger, get_config_dir, get_data_dir
 import time
 from typing import Iterable
 import random
@@ -32,7 +32,7 @@ def set_seed(seed=2020):
     torch.backends.cudnn.benchmark = False
     # torch.use_deterministic_algorithms(True)
 
-log_print		= get_logger('testrun', 'log', '../config/')
+log_print		= get_logger('testrun', 'log', get_config_dir())
 def randomsplit(dataset, data_name, dir_path, filename, val_ratio=0.1, test_ratio=0.2):
 
 
@@ -380,7 +380,7 @@ def parseargs():
     parser.add_argument('--seed', type=int, default=999)
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--save', action='store_true', default=False)
-    parser.add_argument('--input_dir', type=str, default='dataset')
+    parser.add_argument('--input_dir', type=str, default=get_data_dir())
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--eval_steps', type=int, default=5)

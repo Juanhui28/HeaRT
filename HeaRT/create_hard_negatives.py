@@ -28,7 +28,7 @@ def calc_PPR_scores(args):
 
     Read in matrices if they already exist
     """
-    dataset_dir = os.path.join(ROOT_DIR, "data", "ppr", args.dataset)
+    dataset_dir = os.path.join(ROOT_DIR, "dataset", args.dataset)
     base_ppr_file = os.path.join(dataset_dir, f"sparse_adj-{str(args.alpha).replace('.', '')}_eps-{str(args.eps).replace('.', '')}.pt")
 
     # If they don't exist we create them first 
@@ -229,7 +229,7 @@ def calc_all_heuristics(args):
 
     Uses feature similarity for non-OGB datasets
     """
-    dataset_dir = os.path.join(ROOT_DIR, "data", "hard_negative", args.dataset)
+    dataset_dir = os.path.join(ROOT_DIR, "dataset", args.dataset)
     os.makedirs(dataset_dir, exist_ok=True)
 
     if "ogb" in args.dataset.lower():
@@ -245,11 +245,11 @@ def calc_all_heuristics(args):
 
     print("\n>>> Valid")
     val_neg_samples = rank_and_merge_edges(data['valid_pos'], val_cn_scores, val_ppr_scores, feat_sim_scores, data, args)
-    save_samples(val_neg_samples, os.path.join(dataset_dir, f"valid_samples_agg-{args.agg}_norm-{args.pnorm}.npy"))
+    save_samples(val_neg_samples, os.path.join(dataset_dir, f"valid_samples.npy"))
 
     print("\n>>> Test")
     test_neg_samples = rank_and_merge_edges(data['test_pos'], test_cn_scores, test_ppr_scores, feat_sim_scores, data, args, test=True)
-    save_samples(test_neg_samples, os.path.join(dataset_dir, f"test_samples_agg-{args.agg}_norm-{args.pnorm}.npy"))
+    save_samples(test_neg_samples, os.path.join(dataset_dir, f"test_samples.npy"))
 
 
 
