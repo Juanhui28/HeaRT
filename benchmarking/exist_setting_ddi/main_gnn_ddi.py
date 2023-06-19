@@ -22,7 +22,7 @@ from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 from torch_geometric.utils import negative_sampling
 import os
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 
@@ -277,7 +277,7 @@ def main():
 
     # dataset = Planetoid('.', 'cora')
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     
     data = dataset[0]
 

@@ -15,7 +15,7 @@ from utils import *
 import numpy as np
 import os
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def init_seed(seed=2020):
@@ -192,16 +192,16 @@ def main():
     device = f'cuda:{args.device}' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     split_edge = dataset.get_edge_split()
     data = dataset[0]
 
     if args.data_name == 'ogbl-collab':
-        read_data_name = args.data_name.replace('-', '_')
-        with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+        
+        with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
             
@@ -211,8 +211,8 @@ def main():
     
     elif args.data_name == 'ogbl-ppa':
         pos_train_edge = split_edge['train']['edge']
-        read_data_name = args.data_name.replace('-', '_')
-        subset_dir = f'{args.input_dir}/{read_data_name}'
+        
+        subset_dir = f'{args.input_dir}/{args.data_name}'
         val_pos_ix = torch.load(os.path.join(subset_dir, "valid_samples_index.pt"))
         test_pos_ix = torch.load(os.path.join(subset_dir, "test_samples_index.pt"))
 
@@ -220,10 +220,10 @@ def main():
         pos_test_edge = split_edge['test']['edge'][test_pos_ix, :]
 
        
-        with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
 
             neg_test_edge = torch.from_numpy(neg_test_edge)

@@ -13,12 +13,16 @@ from sklearn.metrics import roc_auc_score, average_precision_score
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 from torch_geometric.utils import train_test_split_edges, negative_sampling, to_undirected
 from torch_geometric.datasets import Planetoid
+
 from torch.utils.tensorboard import SummaryWriter
 from baseline_models.NCN.util import PermIterator
 from utils import init_seed, Logger, save_emb, get_logger
+
 import time
 from typing import Iterable
 import random
+
+from utils import *
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
@@ -67,10 +71,10 @@ def randomsplit(dataset, data_name, dir_path, filename, val_ratio=0.1, test_rati
     num_nodes = len(node_set)
     print('the number of nodes in ' + data_name + ' is: ', num_nodes)
 
-    with open(f'{dir_path}/{data_name}/valid_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_valid_{filename}', "rb") as f:
         valid_neg = np.load(f)
         valid_neg = torch.from_numpy(valid_neg)
-    with open(f'{dir_path}/{data_name}/test_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_test_{filename}', "rb") as f:
         test_neg = np.load(f)
         test_neg = torch.from_numpy(test_neg)
 
@@ -116,11 +120,11 @@ def loaddataset(name, use_valedges_as_input,  dir_path, filename, args, load=Non
         split_edge = dataset.get_edge_split()
 
         
-        read_data_name = args.dataset.replace('-', '_')
-        with open(f'{dir_path}/ogbl_{read_data_name}/valid_{filename}', "rb") as f:
+        args.data_name = args.dataset.replace('-', '_')
+        with open(f'{dir_path}/ogbl_{args.data_name}/valid_{filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{dir_path}/ogbl_{read_data_name}/test_{filename}', "rb") as f:
+        with open(f'{dir_path}/ogbl_{args.data_name}/test_{filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
             
@@ -399,7 +403,7 @@ def parseargs():
     parser.add_argument('--seed', type=int, default=999)
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--save', action='store_true', default=False)
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--eval_steps', type=int, default=1)

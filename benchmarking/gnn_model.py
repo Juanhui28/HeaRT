@@ -4,12 +4,9 @@ from pickle import FALSE
 import torch
 import torch.nn.functional as F
 
-
 from torch_sparse import SparseTensor
 import torch_geometric.transforms as T
 from torch_geometric.nn import GCNConv, SAGEConv, GINConv, GATConv
-
-from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 
 # from logger import Logger
 from torch.nn import Embedding

@@ -1,3 +1,4 @@
+import joblib
 import os
 import torch
 import numpy as np
@@ -7,9 +8,9 @@ import math
 import logging.config 
 
 
-def get_data_dir():
+def get_root_dir():
     file_dir = os.path.dirname(os.path.realpath(__file__))
-    return os.path.join("..", file_dir, "dataset")
+    return os.path.join(file_dir, "..")
 
 
 def get_config_dir():
@@ -34,6 +35,7 @@ def glorot(tensor):
 def zeros(tensor):
     if tensor is not None:
         tensor.data.fill_(0)
+        
 def save_model(model, save_path, emb=None):
 
     if emb == None:
@@ -246,7 +248,7 @@ def get_logger(name, log_dir, config_dir):
 	A logger object which writes to both file and stdout
 		
 	"""
-	config_dict = json.load(open( config_dir + 'log_config.json'))
+	config_dict = json.load(open(os.path.join(config_dir, 'log_config.json')))
 	# config_dict['handlers']['file_handler']['filename'] = log_dir + name.replace('/', '-')
 	logging.config.dictConfig(config_dict)
 	logger = logging.getLogger(name)

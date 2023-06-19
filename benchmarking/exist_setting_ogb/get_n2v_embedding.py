@@ -34,12 +34,11 @@ def main():
     device = f'cuda:{args.device}' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     data = dataset[0]
 
     
-
-    save_path = 'dataset/'+args.data_name+'-n2v-embedding.pt'
+    save_path = os.path.join(get_root_dir(), 'dataset', args.data_name+'-n2v-embedding.pt')
     model = Node2Vec(data.edge_index, args.embedding_dim, args.walk_length,
                      args.context_size, args.walks_per_node,
                      sparse=True).to(device)

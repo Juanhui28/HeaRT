@@ -14,7 +14,6 @@ from torch_geometric.data import Data
 
 import scipy.sparse as ssp
 
-
 from baseline_models.nbfnet import tasks, util
 from baseline_models.nbfnet.util import detect_variables, literal_eval
 
@@ -26,12 +25,13 @@ from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 import easydict
 import argparse
 
+from utils import *
 
 separator = ">" * 30
 line = "-" * 30
 
-dir_path = get_data_dir()
-log_print		= get_logger('testrun', 'log', get_config_dir())
+dir_path  = get_root_dir()
+log_print = get_logger('testrun', 'log', get_config_dir())
 
 def read_data(data_name, neg_mode):
     data_name = data_name

@@ -22,7 +22,11 @@ from torch_geometric.utils import train_test_split_edges, negative_sampling, to_
 from utils import init_seed, Logger, save_emb, get_logger
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
-log_print		= get_logger('testrun', 'log', get_config_dir())
+from utils import *
+
+log_print = get_logger('testrun', 'log', get_config_dir())
+
+
 def randomsplit(dataset, data_name):
    
     split_edge = {'train': {}, 'valid': {}, 'test': {}}
@@ -31,7 +35,7 @@ def randomsplit(dataset, data_name):
     train_pos, valid_pos, test_pos = [], [], []
     train_neg, valid_neg, test_neg = [], [], []
     node_set = set()
-    dir_path = get_data_dir()
+    dir_path = get_root_dir()
     
     for split in ['train', 'test', 'valid']:
 
@@ -114,7 +118,7 @@ def loaddataset(name, use_valedges_as_input, load=None):
     data.adj_t = SparseTensor.from_edge_index(edge_index, sparse_sizes=(data.num_nodes, data.num_nodes))
     data.adj_t = data.adj_t.to_symmetric().coalesce()
     
-    dir_path = get_data_dir()
+    dir_path = get_root_dir()
     feature_embeddings = torch.load(dir_path+'/dataset' + '/{}/{}'.format(name, 'gnn_feature'))
     feature_embeddings = feature_embeddings['entity_embedding']
 

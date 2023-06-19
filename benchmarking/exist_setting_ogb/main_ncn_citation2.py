@@ -20,10 +20,7 @@ import random
 from utils import Logger
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
-# def set_seed(seed):
-#     torch.manual_seed(seed)
-#     torch.cuda.manual_seed_all(seed)
-#     np.random.seed(seed)
+
 def set_seed(seed=2020):
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -32,6 +29,7 @@ def set_seed(seed=2020):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     # torch.use_deterministic_algorithms(True)
+    
 def save_emb(score_emb, save_path):
 
     pos_valid_pred,neg_valid_pred, pos_test_pred, neg_test_pred, x= score_emb

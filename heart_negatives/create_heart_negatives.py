@@ -1,5 +1,5 @@
 """
-Create hard negative samples for validation and testing evaluation
+Create heart negative samples for validation and testing evaluation
 """
 import os 
 import torch
@@ -120,7 +120,6 @@ def rank_and_merge_node(node_cn_scores, node_ppr_scores, node_feat_scores, true_
     """
     Do so for a single node
     """
-    pnorm = args.pnorm
     k = args.num_samples // 2 
     agg_func = np.mean if args.agg == "mean" else np.min
 
@@ -139,9 +138,9 @@ def rank_and_merge_node(node_cn_scores, node_ppr_scores, node_feat_scores, true_
 
     if node_feat_scores is not None:
         node_feat_ranks = rank_score_matrix(node_feat_scores)
-        combined_node_ranks = agg_func([node_cn_ranks**pnorm, node_ppr_ranks**pnorm, node_feat_ranks**pnorm], axis=0)
+        combined_node_ranks = agg_func([node_cn_ranks, node_ppr_ranks, node_feat_ranks], axis=0)
     else:
-        combined_node_ranks = agg_func([node_cn_ranks**pnorm, node_ppr_ranks**pnorm], axis=0)
+        combined_node_ranks = agg_func([node_cn_ranks, node_ppr_ranks], axis=0)
 
     # If enough non-zero scores we use just take top-k
     # Otherwise we have to randomly select from 0 scores        
@@ -245,22 +244,21 @@ def calc_all_heuristics(args):
 
     print("\n>>> Valid")
     val_neg_samples = rank_and_merge_edges(data['valid_pos'], val_cn_scores, val_ppr_scores, feat_sim_scores, data, args)
-    save_samples(val_neg_samples, os.path.join(dataset_dir, f"valid_samples.npy"))
+    save_samples(val_neg_samples, os.path.join(dataset_dir, f"heart_valid_samples.npy"))
 
     print("\n>>> Test")
     test_neg_samples = rank_and_merge_edges(data['test_pos'], test_cn_scores, test_ppr_scores, feat_sim_scores, data, args, test=True)
-    save_samples(test_neg_samples, os.path.join(dataset_dir, f"test_samples.npy"))
+    save_samples(test_neg_samples, os.path.join(dataset_dir, f"heart_test_samples.npy"))
 
 
 
 def main():
-    parser = ArgumentParser(description="Create hard negative samples")
+    parser = ArgumentParser(description="Create HeaRT negative samples")
     parser.add_argument("--dataset", help="Dataset to create samples for", type=str, required=True)
     parser.add_argument("--use-val-in-test", action='store_true', default=False)
 
     parser.add_argument("--cn-metric", help="Either 'RA' or 'CN'", type=str, default="RA")
-    parser.add_argument("--pnorm", help="P-norm when combining ranks", type=int, default=1)
-    parser.add_argument("--agg", help="For combining ranks. Either 'mean' or 'min'", type=str, default="mean")
+    parser.add_argument("--agg", help="For combining ranks. Either 'mean' or 'min'", type=str, default="min")
     parser.add_argument("--num-samples", help="Number of negative samples per sample", type=int, default=500)
 
     # For PPR

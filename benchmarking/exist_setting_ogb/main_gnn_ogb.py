@@ -21,8 +21,8 @@ from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 from torch_geometric.utils import negative_sampling
 import os
 
-dir_path = get_data_dir()
-log_print		= get_logger('testrun', 'log', get_config_dir())
+dir_path = get_root_dir()
+log_print = get_logger('testrun', 'log', get_config_dir())
 
 
 def get_metric_score_citation2(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred, neg_val_pred, pos_test_pred, neg_test_pred):
@@ -446,9 +446,7 @@ def main():
     device = f'cuda:{args.device}' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
-    # dataset = Planetoid('.', 'cora')
-
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     
     data = dataset[0]
 
@@ -464,7 +462,7 @@ def main():
 
             if args.cat_n2v_feat:
                 print('cat n2v embedding!!')
-                n2v_emb = torch.load('dataset/'+args.data_name+'-n2v-embedding.pt')
+                n2v_emb = torch.load(os.path.join(get_root_dir(), 'dataset', args.data_name+'-n2v-embedding.pt'))
                 data.x = torch.cat((data.x, n2v_emb), dim=-1)
             
             data.x = data.x.to(device)

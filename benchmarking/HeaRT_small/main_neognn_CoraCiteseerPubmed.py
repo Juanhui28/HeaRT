@@ -62,10 +62,10 @@ def read_data(data_name, dir_path, filename):
     edge_index = torch.cat((train_edge,  train_edge[[1,0]]), dim=1)
     edge_weight = torch.ones(edge_index.size(1))
 
-    with open(f'{dir_path}/{data_name}/valid_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_valid_{filename}', "rb") as f:
         valid_neg = np.load(f)
         valid_neg = torch.from_numpy(valid_neg)
-    with open(f'{dir_path}/{data_name}/test_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_test_{filename}', "rb") as f:
         test_neg = np.load(f)
         test_neg = torch.from_numpy(test_neg)
 
@@ -340,7 +340,7 @@ def main():
     parser.add_argument('--runs', type=int, default=10)
     parser.add_argument('--kill_cnt',           dest='kill_cnt',      default=10,    type=int,       help='early stopping')
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--l2',		type=float,             default=0.0,			help='L2 Regularization for Optimizer')
     parser.add_argument('--seed', type=int, default=999)

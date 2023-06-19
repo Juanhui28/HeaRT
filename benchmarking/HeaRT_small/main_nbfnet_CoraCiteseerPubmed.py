@@ -34,7 +34,7 @@ from torch_geometric.data import DataLoader
 separator = ">" * 30
 line = "-" * 30
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def read_data(data_name, dir_path, filename):
@@ -74,10 +74,10 @@ def read_data(data_name, dir_path, filename):
     edge_index = torch.cat((train_edge,  train_edge[[1,0]]), dim=1)
     edge_weight = torch.ones(edge_index.size(1))
 
-    with open(f'{dir_path}/{data_name}/valid_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_valid_{filename}', "rb") as f:
         valid_neg = np.load(f)
         valid_neg = torch.from_numpy(valid_neg)
-    with open(f'{dir_path}/{data_name}/test_{filename}', "rb") as f:
+    with open(f'{dir_path}/{data_name}/heart_test_{filename}', "rb") as f:
         test_neg = np.load(f)
         test_neg = torch.from_numpy(test_neg)
 
@@ -337,7 +337,7 @@ def parse_args():
     parser.add_argument('--dropout', type=float, default=0.1) 
     parser.add_argument('--hidden_dims',  nargs='+', type=int, default=32)
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--num_epoch', type=int, default=64)

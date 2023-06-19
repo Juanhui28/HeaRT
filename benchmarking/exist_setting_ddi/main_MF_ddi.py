@@ -14,7 +14,7 @@ from utils import *
 
 import numpy as np
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 def init_seed(seed=2020):
     np.random.seed(seed)
@@ -210,7 +210,7 @@ def main():
     device = f'cuda:{args.device}' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     split_edge = dataset.get_edge_split()
     data = dataset[0]
 

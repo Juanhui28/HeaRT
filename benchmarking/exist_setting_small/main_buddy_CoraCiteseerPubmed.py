@@ -19,7 +19,8 @@ from torch.utils.data import DataLoader
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
-log_print		= get_logger('testrun', 'log', get_config_dir())
+log_print = get_logger('testrun', 'log', get_config_dir())
+
 
 def get_data(args):
 
@@ -28,9 +29,9 @@ def get_data(args):
 
     data = read_data(data_name)
 
+    # NOTE: This gets overwritten
     transform = RandomLinkSplit(is_undirected=True, num_val=0.05, num_test=0.1,
                                     add_negative_train_samples=True)
-    
     train_data, val_data, test_data = transform(dataset.data)
 
     train_pos = data['train']['edge'].t()
@@ -65,7 +66,7 @@ def read_data( data_name):
     train_pos, valid_pos, test_pos = [], [], []
     train_neg, valid_neg, test_neg = [], [], []
     node_set = set()
-    dir_path = get_data_dir()
+    dir_path = get_root_dir()
     
     for split in ['train', 'test', 'valid']:
 

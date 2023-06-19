@@ -24,6 +24,7 @@ from torch_geometric.utils import to_networkx, to_undirected
 
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 
+from utils import *
 from get_heuristic import *
 from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 
@@ -149,7 +150,7 @@ def main():
 
     # dataset = Planetoid('.', 'cora')
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     
     data = dataset[0]
     

@@ -1,15 +1,12 @@
-
 import sys
 sys.path.append("..") 
 
 import torch
-import numpy as np
 import argparse
 import scipy.sparse as ssp
 from gnn_model import *
 from utils import *
 from scoring import mlp_score
-# from logger import Logger
 
 from torch.utils.data import DataLoader
 from torch_sparse import SparseTensor
@@ -19,8 +16,10 @@ from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
-dir_path = get_data_dir()
-log_print		= get_logger('testrun', 'log', get_config_dir())
+dir_path  = get_root_dir()
+log_print = get_logger('testrun', 'log', get_config_dir())
+
+
 def read_data(data_name, neg_mode):
     data_name = data_name
 
@@ -323,8 +322,6 @@ def main():
     ###### n2v
     parser.add_argument('--cat_n2v_feat', default=False, action='store_true')
     
-    # state = torch.load('output_test/lr0.01_drop0.1_l20.0001_numlayer1_numPredlay2_numGinMlplayer2_dim64_best_run_0')
-
     args = parser.parse_args()
    
 
@@ -348,7 +345,7 @@ def main():
 
     if args.cat_n2v_feat:
         print('cat n2v embedding!!')
-        n2v_emb = torch.load(dir_path+'/dataset/'+args.data_name+'-n2v-embedding.pt')
+        n2v_emb = torch.load(os.path.join(get_root_dir(), 'dataset', args.data_name+'-n2v-embedding.pt'))
         x = torch.cat((x, n2v_emb), dim=-1)
 
     x = x.to(device)

@@ -22,7 +22,7 @@ from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 from torch_geometric.utils import negative_sampling
 import os
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 
@@ -96,11 +96,7 @@ def train(model, score_func, split_edge, train_pos, data, emb, optimizer, batch_
         edge_index = torch.stack([col, row], dim=0)
         edge = negative_sampling(edge_index, num_nodes=x.size(0),
                                 num_neg_samples=perm.size(0), method='dense')
-        # else:
-        #     # Just do some trivial random sampling.
-        #     edge = torch.randint(0, num_nodes, edge.size(), dtype=torch.long,
-        #                         device=h.device)
-            
+           
         neg_out = score_func(h[edge[0]], h[edge[1]])
         neg_loss = -torch.log(1 - neg_out + 1e-15).mean()
 
@@ -219,7 +215,7 @@ def main():
     parser.add_argument('--runs', type=int, default=10)
     parser.add_argument('--kill_cnt',           dest='kill_cnt',      default=30,    type=int,       help='early stopping')
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--l2',		type=float,             default=0.0,			help='L2 Regularization for Optimizer')
     parser.add_argument('--seed',  type=int, default=999)
@@ -265,7 +261,7 @@ def main():
 
     # dataset = Planetoid('.', 'cora')
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     
     data = dataset[0]
 
@@ -334,11 +330,11 @@ def main():
     pos_valid_edge = split_edge['valid']['edge']
     pos_test_edge = split_edge['test']['edge']
 
-    read_data_name = args.data_name.replace('-', '_')
-    with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+    
+    with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
         neg_valid_edge = np.load(f)
         neg_valid_edge = torch.from_numpy(neg_valid_edge)
-    with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+    with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
         neg_test_edge = np.load(f)
         neg_test_edge = torch.from_numpy(neg_test_edge)
     
@@ -367,10 +363,7 @@ def main():
         init_seed(seed)
         
         save_path = args.output_dir+'/lr'+str(args.lr) + '_drop' + str(args.dropout) + '_l2'+ str(args.l2) + '_numlayer' + str(args.num_layers)+ '_numPredlay' + str(args.num_layers_predictor) + '_numGinMlplayer' + str(args.gin_mlp_layer)+'_dim'+str(args.hidden_channels) + '_'+ 'best_run_'+str(seed)
-        
-        # save_valid = args.output_dir+'/lr'+str(args.lr) + '_drop' + str(args.dropout) + '_l2'+ str(args.l2) + '_numlayer' + str(args.num_layers)+ '_numPredlay' + str(args.num_layers_predictor) + '_numGinMlplayer' + str(args.gin_mlp_layer)+'_dim'+str(args.hidden_channels) + '_'+ 'valid_output'+str(run)
-        # save_valid = args.output_dir+'/lr'+str(args.lr) + '_drop' + str(args.dropout) + '_l2'+ str(args.l2) + '_numlayer' + str(args.num_layers)+ '_numPredlay' + str(args.num_layers_predictor) + '_numGinMlplayer' + str(args.gin_mlp_layer)+'_dim'+str(args.hidden_channels) + '_'+ 'valid_output'+str(run)
-        
+    
 
         if emb != None:
             torch.nn.init.xavier_uniform_(emb.weight)

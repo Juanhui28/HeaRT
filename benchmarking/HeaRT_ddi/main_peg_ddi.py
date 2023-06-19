@@ -12,7 +12,7 @@ from torch_geometric.nn import GCNConv, SAGEConv
 
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 import networkx as nx
-from utils import Logger, get_logger, save_emb, init_seed
+from utils import Logger, get_logger, save_emb, init_seed, get_config_dir, get_root_dir
 from baseline_models.PEG.PEGLayer_ddi import PEGconv
 from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 import scipy.sparse as sp
@@ -28,8 +28,8 @@ from baseline_models.PEG.Graph_embedding import DeepWalk
 import os
 import tensorflow
 
-dir_path = get_data_dir()
-log_print		= get_logger('testrun', 'log', get_config_dir())
+dir_path  = get_root_dir()
+log_print = get_logger('testrun', 'log', get_config_dir())
 #modified from: https://github.com/snap-stanford/ogb/tree/master/examples/linkproppred/ddi
 
 def get_metric_score(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred, neg_val_pred, pos_test_pred, neg_test_pred):
@@ -265,7 +265,7 @@ def main():
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--save', action='store_true', default=False)
 
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--test_batch_size', type=int, default=4096)
@@ -329,11 +329,11 @@ def main():
     idx = idx[:split_edge['valid']['edge'].size(0)]
     split_edge['eval_train'] = {'edge': split_edge['train']['edge'][idx]}
 
-    read_data_name = args.data_name.replace('-', '_')
-    with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+    
+    with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
         neg_valid_edge = np.load(f)
         neg_valid_edge = torch.from_numpy(neg_valid_edge)
-    with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+    with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
         neg_test_edge = np.load(f)
         neg_test_edge = torch.from_numpy(neg_test_edge)
         

@@ -12,7 +12,7 @@ import argparse
 import scipy.sparse as ssp
 from torch_sparse import SparseTensor
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 
 def read_data(data_name, neg_mode):
     data_name = data_name

@@ -15,7 +15,7 @@ from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 from utils import *
 import numpy as np
 import random
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def init_seed(seed=2020):
@@ -175,7 +175,7 @@ def main():
     parser.add_argument('--kill_cnt', type=int, default=20)
     parser.add_argument('--save', action='store_true', default=False)
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--test_batch_size', type=int, default=4096)
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
@@ -213,11 +213,11 @@ def main():
     pos_test_edge = torch.cat([source.unsqueeze(1), target.unsqueeze(1)], dim=-1)
    
 
-    read_data_name = args.data_name.replace('-', '_')
-    with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+    
+    with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
         neg_valid_edge = np.load(f)
         neg_valid_edge = torch.from_numpy(neg_valid_edge)
-    with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+    with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
         neg_test_edge = np.load(f)
         neg_test_edge = torch.from_numpy(neg_test_edge)
 

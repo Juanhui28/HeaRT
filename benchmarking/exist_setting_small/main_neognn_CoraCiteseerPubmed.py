@@ -21,7 +21,7 @@ from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 from baseline_models.neognn import NeoGNN
 from torch_scatter import scatter_add
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 def read_data(data_name, neg_mode):
     data_name = data_name

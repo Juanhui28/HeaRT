@@ -24,11 +24,14 @@ from torch_geometric.utils import to_networkx, to_undirected
 
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 
+from utils import *
 from get_heuristic import *
 from evalutors import evaluate_hits, evaluate_mrr, evaluate_auc
 
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
+
+
 def read_data(data_name, neg_mode):
     data_name = data_name
 

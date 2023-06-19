@@ -12,7 +12,7 @@ from torch_geometric.nn import GCNConv, SAGEConv
 
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 import networkx as nx
-from utils import Logger, get_logger, save_emb, init_seed, get_data_dir, get_config_dir
+from utils import Logger, get_logger, save_emb, init_seed, get_root_dir, get_config_dir
 from baseline_models.PEG.PEGLayer_collab import PEGconv
 import scipy.sparse as sp
 import tensorflow
@@ -35,7 +35,7 @@ import random
 import math
 from sklearn.preprocessing import normalize
 
-dir_path = get_data_dir()
+dir_path = get_root_dir()
 log_print		= get_logger('testrun', 'log', get_config_dir())
 
 def get_metric_score(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred, neg_val_pred, pos_test_pred, neg_test_pred):
@@ -288,7 +288,7 @@ def main():
 
     parser.add_argument('--kill_cnt',           dest='kill_cnt',      default=20,    type=int,       help='early stopping')
     parser.add_argument('--output_dir', type=str, default='output_test')
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--test_batch_size', type=int, default=4096)
@@ -369,11 +369,11 @@ def main():
     embeddings = embeddings.to(device)
     data = data.to(device)
     
-    read_data_name = args.data_name.replace('-', '_')
-    with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+    
+    with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
         neg_valid_edge = np.load(f)
         neg_valid_edge = torch.from_numpy(neg_valid_edge)
-    with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+    with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
         neg_test_edge = np.load(f)
         neg_test_edge = torch.from_numpy(neg_test_edge)
         

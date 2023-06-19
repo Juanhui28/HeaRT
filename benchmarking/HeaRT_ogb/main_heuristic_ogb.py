@@ -24,6 +24,7 @@ from torch_geometric.utils import to_networkx, to_undirected
 
 from ogb.linkproppred import PygLinkPropPredDataset, Evaluator
 
+from utils import *
 from get_heuristic import *
 from evalutors import evaluate_hits, evaluate_auc, evaluate_mrr
 
@@ -94,7 +95,7 @@ def main():
 
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--remove', action='store_true', default=False)
-    parser.add_argument('--input_dir', type=str, default=get_data_dir())
+    parser.add_argument('--input_dir', type=str, default=os.path.join(get_root_dir(), "dataset"))
     parser.add_argument('--filename', type=str, default='samples.npy')
     
 
@@ -103,7 +104,7 @@ def main():
 
     # dataset = Planetoid('.', 'cora')
 
-    dataset = PygLinkPropPredDataset(name=args.data_name)
+    dataset = PygLinkPropPredDataset(name=args.data_name, root=os.path.join(get_root_dir(), "dataset", args.data_name))
     
     data = dataset[0]
     
@@ -135,18 +136,18 @@ def main():
         
         pos_test_edge = split_edge['test']['edge']
     
-        read_data_name = args.data_name.replace('-', '_')
-        with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+        
+        with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
     
     elif args.data_name == 'ogbl-ppa':
         pos_train_edge = split_edge['train']['edge']
-        read_data_name = args.data_name.replace('-', '_')
-        subset_dir = f'{args.input_dir}/{read_data_name}'
+        
+        subset_dir = f'{args.input_dir}/{args.data_name}'
         val_pos_ix = torch.load(os.path.join(subset_dir, "valid_samples_index.pt"))
         test_pos_ix = torch.load(os.path.join(subset_dir, "test_samples_index.pt"))
 
@@ -154,10 +155,10 @@ def main():
         pos_test_edge = split_edge['test']['edge'][test_pos_ix, :]
 
        
-        with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
     
@@ -176,11 +177,11 @@ def main():
         pos_test_edge = torch.cat([source.unsqueeze(1), target.unsqueeze(1)], dim=-1)
         # neg_test_edge = split_edge['test']['target_node_neg']
 
-        read_data_name = args.data_name.replace('-', '_')
-        with open(f'{args.input_dir}/{read_data_name}/valid_{args.filename}', "rb") as f:
+        
+        with open(f'{args.input_dir}/{args.data_name}/heart_valid_{args.filename}', "rb") as f:
             neg_valid_edge = np.load(f)
             neg_valid_edge = torch.from_numpy(neg_valid_edge)
-        with open(f'{args.input_dir}/{read_data_name}/test_{args.filename}', "rb") as f:
+        with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
 

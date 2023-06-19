@@ -29,7 +29,7 @@ from baseline_models.PEG.Graph_embedding import DeepWalk
 import os
 import tensorflow
 
-dir_path  = get_data_dir()
+dir_path  = get_root_dir()
 log_print = get_logger('testrun', 'log', get_config_dir())
 #modified from: https://github.com/snap-stanford/ogb/tree/master/examples/linkproppred/ddi
 
