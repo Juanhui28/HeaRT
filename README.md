@@ -32,16 +32,15 @@ To reproduce the results, please refer to the settings in the **hyparameter** di
 
 ## Generate Negative Samples using HeaRT
 
-The code for generating the new negative samples can be found in the `heart_negatives` directory. To reproduce those used in the study, please see the scripts in the `scripts/HeaRT` directory. 
+The set of negative samples generated via HeaRT that were utilized in the study can be reproduced via the scripts in the `scripts/HeaRT/` directory. 
 
 A custom set of negative samples can be produced by running the `heart_negatives/create_heart_negatives.py` script. Multiple options exist to customize the negative samples. This includes:
 - The CN metric used. Can be either `CN` or `RA` (default is `RA`). Specified via the `--cn-metric` argument.
 - The aggregation function used. Can be either `min` or `mean` (default is `min`). Specified via the `--agg` argument.
 - The number of negatives generated per positive sample. Specified via the `--num-samples` argument (default is 500).
-- The PPR parameters. This includes the tolerance used for approximating the PPR (`--eps` argument) and the teleporation probability (`--alpha` argument). `alpha` is fixed at 0.15 for all datasets. For the tolerance `eps`, we recommend following the settings found in `scripts/HeaRT`.
+- The PPR parameters. This includes the tolerance used for approximating the PPR (`--eps` argument) and the teleporation probability (`--alpha` argument). `alpha` is fixed at 0.15 for all datasets. For the tolerance, `eps`, we recommend following the settings found in `scripts/HeaRT`.
 
 
 ## Cite
-
 
 
