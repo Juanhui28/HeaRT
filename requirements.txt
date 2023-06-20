@@ -1,0 +1,17 @@
+datasketch==1.5.9
+dgl==0.9.1
+easydict==1.10
+fast_pagerank==0.0.4
+Jinja2==3.1.2
+joblib==1.1.1
+networkx==2.8.7
+numpy==1.23.1
+ogb==1.3.5
+pandas==1.5.0
+scikit_learn==1.2.0
+scipy==1.10.0
+torch==1.12.1
+torch_geometric==2.2.0
+torch_scatter==2.1.0
+torch_sparse==0.6.16
+tqdm==4.64.1
