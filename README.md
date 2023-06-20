@@ -27,7 +27,9 @@ Please note that the resulting directory `dataset` must be placed in the root pr
 
 ## Reproduce Results
 
-To reproduce the results, please refer to the settings in the **hyparameter** directory
+To reproduce the results, please refer to the settings in the **hyparameter** directory. 
+
+For example, to reproduce the results on ogbl-collab under the existing evaluation setting, the commands to run each method can be found in the `hyperparameter/existing_setting_ogb/ogbl-collab.sh` file.
 
 
 ## Generate Negative Samples using HeaRT
