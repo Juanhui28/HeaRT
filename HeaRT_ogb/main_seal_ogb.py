@@ -419,6 +419,8 @@ def main():
                     )
     parser.add_argument('--eval_mrr_data_name', type=str, default='ogbl-citation2')
     parser.add_argument('--test_bs', type=int, default=1024)
+    parser.add_argument('--val_full', action='store_true', 
+                    help="full validation")
     
     ###debug:
     # parser.add_argument('--train_percent', type=float, default=0.01)
