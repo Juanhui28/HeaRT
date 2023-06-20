@@ -233,14 +233,15 @@ def main():
 
     print('heurisitic: ', args.use_heuristic)    
 
-    print('valid/test mrr of ' + args.data_name + ' is: ', result['MRR'][0], result['MRR'][1])
+    print('valid:  mrr of ' + args.data_name + ' is: ', result['MRR'][0])
+    print('test: mrr of ' + args.data_name + ' is: ', result['MRR'][1])
 
-    print('hit 1, 3, 10, 100 of ' + args.data_name + ' is: ', result['Hits@1'][1], result['Hits@3'][1], result['Hits@10'][1], result['Hits@100'][1])
+    print('test: hit 1, 3, 10, 100 of ' + args.data_name + ' is: ', result['Hits@1'][1], result['Hits@3'][1], result['Hits@10'][1], result['Hits@100'][1])
 
 
-    print('AUC and AP of ' + args.data_name + ' is: ', result['AUC'][1], result['AP'][1] )
+    print('test: AUC and AP of ' + args.data_name + ' is: ', result['AUC'][1], result['AP'][1] )
 
-    print('hit 1, 3, 10 from mrr of ' + args.data_name + ' is: ', result['mrr_hit1'][1], result['mrr_hit3'][1], result['mrr_hit10'][1],  result['mrr_hit100'][1])
+    # print('hit 1, 3, 10 from mrr of ' + args.data_name + ' is: ', result['mrr_hit1'][1], result['mrr_hit3'][1], result['mrr_hit10'][1],  result['mrr_hit100'][1])
 
 
 

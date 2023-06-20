@@ -1,17 +1,17 @@
 ## Environment
 
-For PEG:
+PEG:
 
-python3.7 + torch 1.8.1 (cuda10.2) + torch_geometric 1.7.2 + ogb1.3.6
+- python3.7 + torch 1.8.1 (cuda10.2) + torch_geometric 1.7.2 + ogb1.3.6
 
 
-other models:
+Other models:
 
 The following two environments both work:
 
-python3.9 + torch 1.12.1 (cuda11.6) + torch_geometric 2.2.0 + ogb1.3.5
+- python3.9 + torch 1.12.1 (cuda11.6) + torch_geometric 2.2.0 + ogb1.3.5
 
-python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
+- python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
 
 ## Directories
 
@@ -21,13 +21,13 @@ python3.10 + torch 1.13.1 (cuda11.7) + torch_geometric 2.2.0 + ogb1.3.5
 - HeaRT_small: running files for cora, citeseer, and pubmed under HeaRT
 - HeaRT_ogb: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under HeaRT
 - HeaRT_ddi: running files for ogbl-ddi under HeaRT
-
+- hyparameter: hyperparameters for different models/datasets
 
 ## Reproduce Results
 
 To reproduce the results, please refer to the settings in **hyparameter** directory
 
-example to run cora under the existing setting
+example to run cora under the existing setting:
 ```
 cd existing_setting_small
 ```

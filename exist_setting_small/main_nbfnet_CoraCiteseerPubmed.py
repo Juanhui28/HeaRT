@@ -367,7 +367,7 @@ def parse_args():
     parser.add_argument('--output_dir', type=str, default='output_test')
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--epochs', type=int, default=64)
-    parser.add_argument('--runs', type=int, default=64)
+    parser.add_argument('--runs', type=int, default=10)
 
 
 

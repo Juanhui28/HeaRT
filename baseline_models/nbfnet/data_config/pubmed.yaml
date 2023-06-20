@@ -33,7 +33,7 @@ train:
   batch_size: 16
   num_epoch: 20
   log_interval: 100
-  runs: 1
+  runs: 10
   eval_metric: 'MRR'
   kill_cnt: 20
 

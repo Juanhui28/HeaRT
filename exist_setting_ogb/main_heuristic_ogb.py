@@ -285,6 +285,8 @@ def main():
         if args.use_mrr:
             print('valid/test mrr of ' + args.data_name + ' is: ', result['MRR'][0], result['MRR'][1])
 
+        print('\n')
+        
         for i in range(2):
             if i == 0: print('validation performance: ')
             if i == 1: print('test performance: ')
@@ -294,6 +296,7 @@ def main():
 
 
             print('AUC and AP of ' + args.data_name + ' is: ', result['AUC'][i], result['AP'][i] )
+            print('\n')
 
          
 
