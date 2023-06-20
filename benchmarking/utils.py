@@ -234,28 +234,14 @@ class Logger_ddi(object):
 
 
 def get_logger(name, log_dir, config_dir):
-	"""
-	Creates a logger object
-
-	Parameters
-	----------
-	name:           Name of the logger file
-	log_dir:        Directory where logger file needs to be stored
-	config_dir:     Directory from where log_config.json needs to be read
 	
-	Returns
-	-------
-	A logger object which writes to both file and stdout
-		
-	"""
-	config_dict = json.load(open(os.path.join(config_dir, 'log_config.json')))
-	# config_dict['handlers']['file_handler']['filename'] = log_dir + name.replace('/', '-')
-	logging.config.dictConfig(config_dict)
-	logger = logging.getLogger(name)
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.propagate = False
 
-	std_out_format = '%(asctime)s - [%(levelname)s] - %(message)s'
-	consoleHandler = logging.StreamHandler(sys.stdout)
-	consoleHandler.setFormatter(logging.Formatter(std_out_format))
-	logger.addHandler(consoleHandler)
+    std_out_format = '%(asctime)s - [%(levelname)s] - %(message)s'
+    consoleHandler = logging.StreamHandler(sys.stdout)
+    consoleHandler.setFormatter(logging.Formatter(std_out_format))
+    logger.addHandler(consoleHandler)
 
-	return logger
+    return logger

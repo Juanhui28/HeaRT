@@ -117,21 +117,6 @@ def test_multiple_models(models, val_loader, test_loader, device, args, emb, eva
         m.eval()
 
 
-    # y_pred, y_true = [[] for _ in range(len(models))], [[] for _ in range(len(models))]
-    # for data in tqdm(val_loader, ncols=70):
-    #     data = data.to(device)
-    #     x = data.x if args.use_feature else None
-    #     edge_weight = data.edge_weight if args.use_edge_weight else None
-    #     node_id = data.node_id if emb else None
-    #     for i, m in enumerate(models):
-    #         logits = m(data.z, data.edge_index, data.batch, x, edge_weight, node_id)
-    #         y_pred[i].append(logits.view(-1).cpu())
-    #         y_true[i].append(data.y.view(-1).cpu().to(torch.float))
-    # val_pred = [torch.cat(y_pred[i]) for i in range(len(models))]
-    # val_true = [torch.cat(y_true[i]) for i in range(len(models))]
-    # pos_val_pred = [val_pred[i][val_true[i]==1] for i in range(len(models))]
-    # neg_val_pred = [val_pred[i][val_true[i]==0] for i in range(len(models))]
-
     y_pred, y_true = [[] for _ in range(len(models))], [[] for _ in range(len(models))]
     for data in tqdm(test_loader, ncols=70):
         data = data.to(device)
@@ -149,6 +134,23 @@ def test_multiple_models(models, val_loader, test_loader, device, args, emb, eva
 
     pos_val_pred = pos_test_pred
     neg_val_pred = neg_test_pred
+
+    if val_loader != None:
+        y_pred, y_true = [[] for _ in range(len(models))], [[] for _ in range(len(models))]
+        for data in tqdm(val_loader, ncols=70):
+            data = data.to(device)
+            x = data.x if args.use_feature else None
+            edge_weight = data.edge_weight if args.use_edge_weight else None
+            node_id = data.node_id if emb else None
+            for i, m in enumerate(models):
+                logits = m(data.z, data.edge_index, data.batch, x, edge_weight, node_id)
+                y_pred[i].append(logits.view(-1).cpu())
+                y_true[i].append(data.y.view(-1).cpu().to(torch.float))
+        val_pred = [torch.cat(y_pred[i]) for i in range(len(models))]
+        val_true = [torch.cat(y_true[i]) for i in range(len(models))]
+        pos_val_pred = [val_pred[i][val_true[i]==1]  for i in range(len(models))]
+        neg_val_pred = [val_pred[i][val_true[i]==0]  for i in range(len(models))]
+
     
     print('val pos, val neg, test pos, test neg:',  pos_val_pred[0].size(), neg_val_pred[0].size(), pos_test_pred[0].size(), neg_test_pred[0].size())
     
@@ -278,8 +280,11 @@ def main():
                     help="whether to consider edge weight in GNN")
     parser.add_argument('--test_multiple_models', action='store_true', 
                     help="test multiple models together")
-    parser.add_argument('--test_seed', type=int,default=0
-                    )
+    parser.add_argument('--test_seed', type=int,default=0)
+
+    parser.add_argument('--model_path', type=str, default='output_test')
+    parser.add_argument('--val_full', action='store_true', 
+                    help="full validation")
     
    
 
@@ -428,7 +433,9 @@ def main():
                       node_embedding=emb).to(device)
         # for run in range(args.test_seed):
         run=0
-        file = 'output/citation2/seal/SEAL_model_'+str(args.lr)+'_'+str(args.test_seed)
+        # file = 'output/citation2/seal/SEAL_model_'+str(args.lr)+'_'+str(args.test_seed)
+        file = args.model_path+'/SEAL_model_'+str(args.test_seed)
+
         model_paths.append(file)
             # enter all your pretrained .pth model paths here
         models = []
@@ -436,6 +443,9 @@ def main():
             m = cp.deepcopy(model)
             m.load_state_dict(torch.load(path, map_location='cpu'))
             models.append(m)
+
+        if args.val_full == False:
+            val_loader = None
         Results = test_multiple_models(models, val_loader, test_loader, device, args, emb, evaluator_hit, evaluator_mrr)
 
         for i, path in enumerate(model_paths):
@@ -545,8 +555,8 @@ def main():
                     if args.save:
 
                         save_emb(score_emb, save_path)
-                        torch.save(model.state_dict(), args.output_dir+'SEAL_model_'+str(args.lr)+'_'+str(seed))
-                        torch.save(optimizer.state_dict(), args.output_dir+'SEAL_opti_'+str(args.lr)+'_'+str(seed))
+                        torch.save(model.state_dict(), args.output_dir+'/SEAL_model_'+str(seed))
+                        torch.save(optimizer.state_dict(), args.output_dir+'/SEAL_opti_'+str(seed))
                 
                 else:
                     kill_cnt += 1

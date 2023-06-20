@@ -228,7 +228,7 @@ def test(model, data, x, evaluator_hit, evaluator_mrr, batch_size):
 
 
 
-def main(count, lr, l2, dropout):
+def main():
     parser = argparse.ArgumentParser(description='homo')
     parser.add_argument('--data_name', type=str, default='cora')
     parser.add_argument('--neg_mode', type=str, default='equal')
@@ -272,7 +272,7 @@ def main(count, lr, l2, dropout):
 
     args = parser.parse_args()
    
-    # print(args.lr, args.l2, args.dropout)
+    
     print(args.with_loss_weight)
     print(args)
 
