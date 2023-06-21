@@ -30,7 +30,7 @@ Please note that the resulting directory `dataset` must be placed in the root pr
 
 To reproduce the results, please refer to the settings in the **scripts/hyparameters** directory. We include a file for each dataset which includes the command to train and evaluate each possible method.
 
-For example, to reproduce the results on ogbl-collab under the existing evaluation setting, the command for each method can be found in the `ogbl-collab.sh` file located in the `scripts/hyperparameter/existing_setting_ogb/` directory. One example is shown below:
+For example, to reproduce the results on ogbl-collab under the existing evaluation setting, the command for each method can be found in the `ogbl-collab.sh` file located in the `scripts/hyperparameter/existing_setting_ogb/` directory. One example to run GCN  on ogbl-collab under the existing setting is shown below:
 ```
 cd benchmarking/exist_setting_ogb/
 python main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab  --gnn_model GCN --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
