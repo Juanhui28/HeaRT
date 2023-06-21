@@ -48,5 +48,5 @@ python main_ncn_citation2.py  --predictor incn1cn1 --dataset citation2  --xdp 0.
 ##train  --output_dir specify the path you want to save the model 
 python main_seal_ogb.py --data_name ogbl-citation2  --output_dir 'output_test' --save  --batch_size 32 --num_hops 1  --lr 0.001 --hidden_channels 128  --num_layers 3 --use_feature --use_edge_weight --eval_steps 1 --epochs 10 --kill_cnt 20 --dynamic_train --dynamic_val --dynamic_test --train_percent 2 --val_percent 1 --test_percent 1
 
-##test: get the test performance for one seeed, you need to specify the --model_path: the path of the saved model, --test_seed: the seed number , if you add want to get the validation results, add --val_full
+##test: get the test performance for one seed, you need to specify the --model_path: the path of the saved model, --test_seed: the seed number , if you add want to get the validation results, add --val_full
 python main_seal_ogb.py --runs 1 --model_path 'output_test' --test_seed 0 --lr 0.001  --test_multiple_models  --data_name ogbl-citation2 --num_workers 4  --batch_size 32 --num_hops 1   --hidden_channels 128  --num_layers 3 --use_feature --use_edge_weight --eval_steps 1 --epochs 10 --kill_cnt 20 --dynamic_train --dynamic_val --dynamic_test --train_percent 2 --val_percent 100 --test_percent 100 

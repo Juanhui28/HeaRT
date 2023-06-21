@@ -48,4 +48,4 @@ python main_ncn_collabppa.py --predictor cn1  --dataset ppa  --xdp 0.0 --tdp 0.0
 python main_ncn_collabppa.py --predictor incn1cn1 --dataset ppa  --xdp 0.0 --tdp 0.0 --gnnedp 0.1 --preedp 0.0  --gnnlr 0.001 --prelr 0.001 --predp 0 --gnndp 0 --mplayers 3 --hiddim 256 --epochs 50 --kill_cnt 20 --batch_size 65536  --ln --lnnn --model gcn --maskinput  --tailact  --res  --testbs 65536 --proboffset 8.5 --probscale 4.0 --pt 0.1 --alpha 0.9 --splitsize 131072 
 
 ## seal epochs=20
-python -u main_seal_ogb.py  --data_name ogbl-ppa  --lr 0.001  --num_layers 3   --hidden_channels 256  --epochs 20  --eval_steps 5  --kill_cnt 20  --batch_size 32 --runs 1 --num_hops 1 --train_percent 5  --use_feature  --use_edge_weight --num_workers 16  --dynamic_train --dynamic_val --dynamic_test  
+python main_seal_ogb.py  --data_name ogbl-ppa  --lr 0.001  --num_layers 3   --hidden_channels 256  --epochs 20  --eval_steps 5  --kill_cnt 20  --batch_size 32 --runs 1 --num_hops 1 --train_percent 5  --use_feature  --use_edge_weight --num_workers 16  --dynamic_train --dynamic_val --dynamic_test  

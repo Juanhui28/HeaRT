@@ -19,23 +19,23 @@ python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic katz_close 
 
 
 ##node2vec
-python -u main_gnn_ogb.py  --cat_n2v_feat --data_name ogbl-collab --gnn_model mlp_model --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
+python main_gnn_ogb.py  --cat_n2v_feat --data_name ogbl-collab --gnn_model mlp_model --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
 
 ## MF
-python -u main_MF_collabppa.py --data_name ogbl-collab  --hidden_channels 256 --lr 0.01 --dropout 0.3  --num_layers 3  --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536
+python main_MF_collabppa.py --data_name ogbl-collab  --hidden_channels 256 --lr 0.01 --dropout 0.3  --num_layers 3  --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536
 
 ## mlp
-python -u main_gnn_ogb.py   --data_name ogbl-collab  --gnn_model mlp_model --hidden_channels 256 --lr 0.001 --dropout 0 --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
+python main_gnn_ogb.py   --data_name ogbl-collab  --gnn_model mlp_model --hidden_channels 256 --lr 0.001 --dropout 0 --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
 
 
 ## gcn
-python -u main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab  --gnn_model GCN --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
+python main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab  --gnn_model GCN --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
 
 ## gat
-python -u main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab --gnn_model GAT --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
+python main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab --gnn_model GAT --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
 
 ## sage
-python -u main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab --gnn_model SAGE --hidden_channels 256 --lr 0.001 --dropout 0.3  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
+python main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab --gnn_model SAGE --hidden_channels 256 --lr 0.001 --dropout 0.3  --num_layers 3 --num_layers_predictor 3  --epochs 9999 --kill_cnt 100  --batch_size 65536 
 
 
 ##neognn
