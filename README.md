@@ -36,6 +36,7 @@ To run the code, we need to first go to the setting directory:
 - benchmarking/exist_setting_small: running files for cora, citeseer, and pubmed under the existing setting
 - benchmarking/exist_setting_ogb: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under the existing setting
 - benchmarking/exist_setting_ddi: running files for ogbl-ddi under the existing setting
+
 - benchmarking/HeaRT_small: running files for cora, citeseer, and pubmed under HeaRT
 - benchmarking/HeaRT_ogb: running files for  ogbl-collab, ogbl-ppa, and ogbl-citation2 under HeaRT
 - benchmarking/HeaRT_ddi/: running files for ogbl-ddi under HeaRT
@@ -58,11 +59,24 @@ cd benchmarking/exist_setting_ddi/
 python main_gnn_ddi.py --data_name ogbl-ddi --gnn_model GCN  --lr 0.01 --dropout 0.5  --num_layers 3 --num_layers_predictor 3  --hidden_channels 256 --epochs 9999 --eval_steps 1 --kill_cnt 100 --batch_size 65536 
 ```
 
-<!-- One example to run GCN  on cora under **HeaRT** is shown below (similar for citeseer and pubmed) :
+One example to run GCN  on cora under **HeaRT** is shown below (similar for citeseer and pubmed) :
 ```
 cd benchmarking/HeaRT_small/
 python main_gnn_CoraCiteseerPubmed.py  --data_name cora  --gnn_model GCN  --lr 0.001 --dropout 0.5 --l2 0 --num_layers 1 --hidden_channels 256  --num_layers_predictor 3  --epochs 9999 --kill_cnt 10 --eval_steps 5  --batch_size 1024 
-``` -->
+```
+
+One example to run GCN  on ogbl-collab under the **HeaRT** is shown below (similar for ogbl-ppa and ogbl-citation2):
+```
+cd benchmarking/HeaRT_ogb/
+python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model GCN  --lr 0.001 --dropout 0.3 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
+```
+
+One example to run GCN on ogbl-ddi under the **HeaRT** is shown below:
+```
+cd benchmarking/HeaRT_ddi/
+python main_gnn_ddi.py  --data_name ogbl-ddi   --gnn_model GCN --lr 0.01 --dropout 0 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536    
+```
+
 
 
 ## Generate Negative Samples using HeaRT
