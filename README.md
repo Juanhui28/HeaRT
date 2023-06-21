@@ -33,13 +33,13 @@ To reproduce the results, please refer to the settings in the **scripts/hyparame
 For example, to reproduce the results on ogbl-collab under the existing evaluation setting, the command for each method can be found in the `ogbl-collab.sh` file located in the `scripts/hyperparameter/existing_setting_ogb/` directory. 
 
 To run the code, we need to first go to the setting directory:
-- `benchmarking/exist_setting_small`: running files for cora, citeseer, and pubmed under the existing setting
-- `benchmarking/exist_setting_ogb`: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under the existing setting
-- `benchmarking/exist_setting_ddi`: running files for ogbl-ddi under the existing setting
+- `benchmarking/exist_setting_small`: running files for `cora, citeseer, and pubmed` under the existing setting
+- `benchmarking/exist_setting_ogb`: running files for `ogbl-collab, ogbl-ppa, and ogbl-citation2` under the existing setting
+- `benchmarking/exist_setting_ddi`: running files for `ogbl-ddi` under the existing setting
 
-- `benchmarking/HeaRT_small`: running files for cora, citeseer, and pubmed under HeaRT
-- `benchmarking/HeaRT_ogb`: running files for  ogbl-collab, ogbl-ppa, and ogbl-citation2 under HeaRT
-- `benchmarking/HeaRT_ddi/`: running files for ogbl-ddi under HeaRT
+- `benchmarking/HeaRT_small`: running files for `cora, citeseer, and pubmed` under HeaRT
+- `benchmarking/HeaRT_ogb`: running files for  `ogbl-collab, ogbl-ppa, and ogbl-citation2` under HeaRT
+- `benchmarking/HeaRT_ddi/`: running files for `ogbl-ddi` under HeaRT
 
 One example to run GCN  on cora under the **existing setting** is shown below (similar for citeseer and pubmed) :
 ```
