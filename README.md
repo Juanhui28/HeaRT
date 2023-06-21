@@ -1,6 +1,6 @@
 # HeaRT
 
-Official code for the paper "Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking".
+Official code for the paper ["Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking"](https://arxiv.org/pdf/2306.10453.pdf).
 
 
 ## Installation
