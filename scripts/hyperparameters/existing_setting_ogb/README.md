@@ -9,11 +9,11 @@ python main_seal_ogb.py --use_valedges_as_input  --data_name ogbl-collab  --lr  
 ```
 
 Some noteworthy cases to consider are:
-- ogbl-ppa
+## ogbl-ppa
 
  NCNC, SEAL: Each epoch and evaluation process can take several hours to complete. Therefore, it would be quite time-consuming to stop training if the validation performance does not improve within 20 checkpoints. For NCNC, We have defined a maximum number of epochs for training. For SEAL, we follow the setting in the ["original implementation"](https://github.com/facebookresearch/SEAL_OGB/tree/main) to set a maximum epoch number and evaluate every 5 epoch.
 
--  ogbl-citation2
+## ogbl-citation2
 
 SEAL: Due to the significant time complexity,
 We follow the setting in the ["original implementation"](https://github.com/facebookresearch/SEAL_OGB/tree/main) to train and evaluate only a portion of training edges and evaluation edges.  It has two steps: 1) evaluate 1% validation data in parallel and save the best epoch's model for each seed; 2) evaluate each best model on all test edges
