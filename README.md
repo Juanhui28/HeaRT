@@ -28,50 +28,51 @@ Please note that the resulting directory `dataset` must be placed in the root pr
 
 ## Reproduce Results
 
-To reproduce the results, please refer to the settings in the **scripts/hyparameters** directory. We include a file for each dataset which includes the command to train and evaluate each possible method.
+The commands needed to reproduce all the results with the appropriate hyperparameters can be found in the **`scripts/hyparameters`** directory. We include a file for each dataset which includes the command to train and evaluate each possible method.
 
 For example, to reproduce the results on ogbl-collab under the existing evaluation setting, the command for each method can be found in the `ogbl-collab.sh` file located in the `scripts/hyperparameter/existing_setting_ogb/` directory. 
 
-To run the code, we need to first go to the setting directory:
-- `benchmarking/exist_setting_small`: running files for cora, citeseer, and pubmed under the **existing setting**
-- `benchmarking/exist_setting_ogb`: running files for ogbl-collab, ogbl-ppa, and ogbl-citation2 under the **existing setting**
-- `benchmarking/exist_setting_ddi`: running files for ogbl-ddi under the **existing setting**
+To run the code, we need to first go to the appropriate setting directory. This includes:
+- `benchmarking/exist_setting_small`: Run models on Cora, Citeseer, and Pubmed under the **existing setting**.
+- `benchmarking/exist_setting_ogb`: Run models on ogbl-collab, ogbl-ppa, and ogbl-citation2 under the **existing setting**.
+- `benchmarking/exist_setting_ddi`: Run models on on ogbl-ddi under the **existing setting**.
+- `benchmarking/HeaRT_small`: Run models on Cora, Citeseer, and Pubmed under **HeaRT**.
+- `benchmarking/HeaRT_ogb`: Run models on ogbl-collab, ogbl-ppa, and ogbl-citation2 under **HeaRT**.
+- `benchmarking/HeaRT_ddi/`: Run models on ogbl-ddi under **HeaRT**.
 
-- `benchmarking/HeaRT_small`: running files for cora, citeseer, and pubmed under **HeaRT**
-- `benchmarking/HeaRT_ogb`: running files for  ogbl-collab, ogbl-ppa, and ogbl-citation2 under **HeaRT**
-- `benchmarking/HeaRT_ddi/`: running files for ogbl-ddi under **HeaRT**
+Below we give examples of running GCN on the different groups of datasets under both settings:
 
-One example to run GCN  on cora under the **existing setting** is shown below (similar for citeseer and pubmed) :
+a) Cora/Citeseer/Pubmed under the **existing setting**.
 ```
 cd benchmarking/exist_setting_small/
 python  main_gnn_CoraCiteseerPubmed.py  --data_name cora  --gnn_model GCN --lr 0.01 --dropout 0.3 --l2 1e-4 --num_layers 1  --num_layers_predictor 3 --hidden_channels 128 --epochs 9999 --kill_cnt 10 --eval_steps 5  --batch_size 1024
 ```
 
-One example to run GCN  on ogbl-collab under the **existing setting** is shown below (similar for ogbl-ppa and ogbl-citation2):
+ogbl-collab under the **existing setting** (similar for ogbl-ppa and ogbl-citation2):
 ```
 cd benchmarking/exist_setting_ogb/
 python main_gnn_ogb.py  --use_valedges_as_input  --data_name ogbl-collab  --gnn_model GCN --hidden_channels 256 --lr 0.001 --dropout 0.  --num_layers 3 --num_layers_predictor 3 --epochs 9999 --kill_cnt 100  --batch_size 65536 
 ```
 
-One example to run GCN on ogbl-ddi under the **existing setting** is shown below:
+ogbl-ddi under the **existing setting**:
 ```
 cd benchmarking/exist_setting_ddi/
 python main_gnn_ddi.py --data_name ogbl-ddi --gnn_model GCN  --lr 0.01 --dropout 0.5  --num_layers 3 --num_layers_predictor 3  --hidden_channels 256 --epochs 9999 --eval_steps 1 --kill_cnt 100 --batch_size 65536 
 ```
 
-One example to run GCN  on cora under **HeaRT** is shown below (similar for citeseer and pubmed) :
+Cora/Citeseer/Pubmed under **HeaRT**:
 ```
 cd benchmarking/HeaRT_small/
 python main_gnn_CoraCiteseerPubmed.py  --data_name cora  --gnn_model GCN  --lr 0.001 --dropout 0.5 --l2 0 --num_layers 1 --hidden_channels 256  --num_layers_predictor 3  --epochs 9999 --kill_cnt 10 --eval_steps 5  --batch_size 1024 
 ```
 
-One example to run GCN  on ogbl-collab under  **HeaRT** is shown below (similar for ogbl-ppa and ogbl-citation2):
+ogbl-collab under **HeaRT** (similar for ogbl-ppa and ogbl-citation2):
 ```
 cd benchmarking/HeaRT_ogb/
 python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model GCN  --lr 0.001 --dropout 0.3 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
 ```
 
-One example to run GCN on ogbl-ddi under  **HeaRT** is shown below:
+ogbl-ddi under **HeaRT**:
 ```
 cd benchmarking/HeaRT_ddi/
 python main_gnn_ddi.py  --data_name ogbl-ddi   --gnn_model GCN --lr 0.01 --dropout 0 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536    
@@ -91,4 +92,11 @@ A custom set of negative samples can be produced by running the `heart_negatives
 
 
 ## Cite
-
+```
+@article{li2023evaluating,
+  title={Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking},
+  author={Li, Juanhui and Shomer, Harry and Mao, Haitao and Zeng, Shenglai and Ma, Yao and Shah, Neil and Tang, Jiliang and Yin, Dawei},
+  journal={arXiv preprint arXiv:2306.10453},
+  year={2023}
+}
+```
