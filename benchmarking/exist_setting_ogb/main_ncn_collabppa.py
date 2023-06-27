@@ -16,8 +16,8 @@ from torch_geometric.utils import negative_sampling
 from torch.utils.tensorboard import SummaryWriter
 import time
 
-from utils import get_root_dir, get_config_dir
 
+from utils import Logger
 from typing import Iterable
 import random
 
@@ -348,6 +348,7 @@ def parseargs():
     parser.add_argument('--kill_cnt',           dest='kill_cnt',      default=30,    type=int,       help='early stopping')
     parser.add_argument('--seed', type=int, default=999)
     parser.add_argument('--output_dir', type=str, default='output_test')
+    parser.add_argument('--save', action="store_true")
 
 
     args = parser.parse_args()
@@ -393,6 +394,15 @@ def main():
     
     elif args.dataset =='citation2':
         eval_metric = 'MRR'
+
+    loggers = {
+        'Hits@20': Logger(args.runs),
+        'Hits@50': Logger(args.runs),
+        'Hits@100': Logger(args.runs),
+        'AUC': Logger(args.runs),
+        'AP': Logger(args.runs)
+      
+    }
 
    
 
@@ -453,6 +463,8 @@ def main():
                 if True:
                     for key, result in results.items():
                         train_hits, valid_hits, test_hits = result
+                        loggers[key].add_result(run, result)
+
                         if key == eval_metric:
                             current_valid_eval = valid_hits
 
@@ -486,7 +498,8 @@ def main():
                 if bestscore[eval_metric][1] >   best_valid:
                     kill_cnt = 0
                     best_valid =  bestscore[eval_metric][1]
-                    save_emb(score_emb, save_path)
+                    if args.save:
+                        save_emb(score_emb, save_path)
                 
 
                 else:
@@ -498,39 +511,16 @@ def main():
                         break
 
                 
+        for key in loggers.keys():
+            print(key)
+            loggers[key].print_statistics(run)
 
-        print(f"best {bestscore}")
-        
-        ret_auc.append(bestscore["AUC"][-2:])
-        if args.dataset == "collab":
-            ret.append(bestscore["Hits@50"][-2:])
-        elif args.dataset == "ppa":
-            ret.append(bestscore["Hits@100"][-2:])
-        elif args.dataset == "ddi":
-            ret.append(bestscore["Hits@20"][-2:])
-        elif args.dataset == "citation2":
-            ret.append(bestscore[-2:])
-        elif args.dataset in ["Pubmed", "Cora", "Citeseer"]:
-            ret.append(bestscore["Hits@100"][-2:])
-        else:
-            raise NotImplementedError
-        
-    ret = np.array(ret)
-    print(ret)
-    print(f"Final result: val {np.average(ret[:, 0]):.4f} {np.std(ret[:, 0]):.4f} tst {np.average(ret[:, 1]):.4f} {np.std(ret[:, 1]):.4f}")
+   
+    for key in loggers.keys():
+        print(key)
+        loggers[key].print_statistics()
 
-    ret_auc = np.array(ret_auc)
-    print(f"Final AUC: val {np.average(ret_auc[:, 0]):.4f} {np.std(ret_auc[:, 0]):.4f} tst {np.average(ret_auc[:, 1]):.4f} {np.std(ret_auc[:, 1]):.4f}")
     
-    print(f"Final result: val {np.average(ret[:, 0]):.4f} {np.average(ret[:, 1]):.4f}")
-
-    eval_valid = round(np.average(ret[:, 0])*100,4)
-    eval_test = round(np.average(ret[:, 1])*100,4)
-
-    auc_valid = round(np.average(ret_auc[:, 0])*100,4)
-    auc_test = round(np.average(ret_auc[:, 1])*100,4)
-
-    print(str(eval_valid) +' ' + str(eval_test) + ' '+ str(auc_valid) + ' '+ str(auc_test))
 
 if __name__ == "__main__":
     main()
