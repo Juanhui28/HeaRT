@@ -95,8 +95,8 @@ def train(model, train_loader,  optimizer, device, args, emb, train_dataset):
    
     total_loss = 0
     pbar = tqdm(train_loader, ncols=70)
-    # for data in pbar:
-    for data in train_loader:
+    for data in pbar:
+    # for data in train_loader:
         data = data.to(device)
         optimizer.zero_grad()
         x = data.x if args.use_feature else None
@@ -176,8 +176,8 @@ def test(model, val_loader, test_loader,  device, args,emb, evaluator_hit, evalu
     model.eval()
 
     y_pred, y_true = [], []
-    # for data in tqdm(val_loader, ncols=70):
-    for data in val_loader:
+    for data in tqdm(val_loader, ncols=70):
+    # for data in val_loader:
         data = data.to(device)
         x = data.x if args.use_feature else None
         edge_weight = data.edge_weight if args.use_edge_weight else None
@@ -190,8 +190,8 @@ def test(model, val_loader, test_loader,  device, args,emb, evaluator_hit, evalu
     neg_val_pred = val_pred[val_true==0]
 
     y_pred, y_true = [], []
-    # for data in tqdm(test_loader, ncols=70):
-    for data in test_loader:
+    for data in tqdm(test_loader, ncols=70):
+    # for data in test_loader:
         data = data.to(device)
         x = data.x if args.use_feature else None
         edge_weight = data.edge_weight if args.use_edge_weight else None
