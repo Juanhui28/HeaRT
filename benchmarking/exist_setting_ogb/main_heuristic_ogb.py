@@ -248,7 +248,7 @@ def main():
         'neg_test': neg_test_pred
     }
     save_path = args.output_dir + '/beta'+ str(args.beta) + '_pathlen'+ str(args.path_len) + '_' + 'save_score'
-    torch.save(state, save_path)
+    # torch.save(state, save_path)
 
     evaluator_hit = Evaluator(name='ogbl-collab')
     evaluator_mrr = Evaluator(name='ogbl-citation2')
