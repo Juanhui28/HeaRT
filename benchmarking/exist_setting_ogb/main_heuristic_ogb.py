@@ -161,10 +161,9 @@ def main():
 
     if hasattr(data, 'edge_weight'):
         if data.edge_weight != None:
-            edge_weight = data.edge_weight.to(torch.float)
+            # edge_weight = data.edge_weight.to(torch.float)
             edge_weight = data.edge_weight.view(-1).to(torch.float)
-            # train_edge_weight = split_edge['train']['weight']
-            # train_edge_weight = train_edge_weight.to(torch.float)
+           
         else:
             edge_weight = torch.ones(data.edge_index.size(1), dtype=int)
 
