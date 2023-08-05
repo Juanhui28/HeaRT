@@ -14,7 +14,7 @@ python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic RA
 python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic shortest_path
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic katz_close 
+python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic katz_apro 
 
 
 ##node2vec

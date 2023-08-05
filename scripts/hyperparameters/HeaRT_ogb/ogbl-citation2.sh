@@ -13,7 +13,7 @@ python main_heuristic_ogb.py --data_name ogbl-citation2 --use_heuristic RA
 python main_heuristic_ogb.py --data_name ogbl-citation2 --use_heuristic shortest_path
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-citation2 --use_heuristic katz_close --path_len 2
+python main_heuristic_ogb.py --data_name ogbl-citation2 --use_heuristic katz_apro --path_len 2
 
 ## node2vec
 python main_gnn_ogb.py  --data_name ogbl-citation2  --cat_n2v_feat --gnn_model mlp_model --lr 0.001 --dropout 0 --num_layers 3 --hidden_channels 128  --num_layers_predictor 3 --epochs 100 --kill_cnt 20 --eval_steps 1  --batch_size 65536  

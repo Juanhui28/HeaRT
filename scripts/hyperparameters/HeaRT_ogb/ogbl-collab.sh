@@ -13,7 +13,7 @@ python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic RA --use_va
 python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic shortest_path --use_valedges_as_input
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic katz_close --use_valedges_as_input
+python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic katz_apro --use_valedges_as_input
 
 ## node2vec
 python main_gnn_ogb.py  --data_name ogbl-collab --cat_n2v_feat --gnn_model mlp_model  --use_valedges_as_input   --lr 0.001 --dropout 0 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
