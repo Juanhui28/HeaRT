@@ -165,7 +165,7 @@ def get_metric_score(evaluator_hit, evaluator_mrr, pos_train_pred, pos_val_pred,
 
         
 
-def train(model, score_func, train_pos, x, optimizer, batch_size, loss_weight):
+def train(model, score_func, train_pos, x, optimizer, batch_size):
     model.train()
     score_func.train()
 
@@ -208,7 +208,7 @@ def train(model, score_func, train_pos, x, optimizer, batch_size, loss_weight):
         neg_out = score_func(h[edge[0]], h[edge[1]])
         neg_loss = -torch.log(1 - neg_out + 1e-15).mean()
 
-        loss = pos_loss + loss_weight * neg_loss
+        loss = pos_loss + neg_loss
         loss.backward()
 
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -321,8 +321,6 @@ def main():
 
     ###### n2v
     parser.add_argument('--cat_n2v_feat', default=False, action='store_true')
-
-    parser.add_argument('--loss-weight', type=int, default=1) 
     
     args = parser.parse_args()
    
@@ -398,7 +396,7 @@ def main():
         best_valid = 0
         kill_cnt = 0
         for epoch in range(1, 1 + args.epochs):
-            loss = train(model, score_func, train_pos, x, optimizer, args.batch_size, args.loss_weight)
+            loss = train(model, score_func, train_pos, x, optimizer, args.batch_size)
             # print(model.convs[0].att_src[0][0][:10])
             
             if epoch % args.eval_steps == 0:
@@ -431,10 +429,10 @@ def main():
                     kill_cnt = 0
 
                     if args.save:
-                        loss_suff = f"loss-{args.loss_weight}_" if args.loss_weight > 1 else ""
-                        torch.save(model.state_dict(), f"gmodel/{args.data_name}_{args.gnn_model}_{loss_suff}{run}.pt")
-                        torch.save(score_func.state_dict(), f"gmodel/{args.data_name}_{args.gnn_model}_{loss_suff}{run}.pre.pt")
 
+                        save_emb(score_emb, save_path)
+
+                
                 else:
                     kill_cnt += 1
                     
