@@ -5,7 +5,7 @@ Official code for the paper ["Evaluating Graph Neural Networks for Link Predicti
 
 ## Installation
 
-Please see `installation.md` for how to install the proper requirements. 
+Please see the [installation.md](./installation.md) for how to install the proper requirements. 
 
 
 ## Download Data
