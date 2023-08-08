@@ -161,10 +161,9 @@ def main():
 
     if hasattr(data, 'edge_weight'):
         if data.edge_weight != None:
-            edge_weight = data.edge_weight.to(torch.float)
+            # edge_weight = data.edge_weight.to(torch.float)
             edge_weight = data.edge_weight.view(-1).to(torch.float)
-            # train_edge_weight = split_edge['train']['weight']
-            # train_edge_weight = train_edge_weight.to(torch.float)
+           
         else:
             edge_weight = torch.ones(data.edge_index.size(1), dtype=int)
 
@@ -248,7 +247,7 @@ def main():
         'neg_test': neg_test_pred
     }
     save_path = args.output_dir + '/beta'+ str(args.beta) + '_pathlen'+ str(args.path_len) + '_' + 'save_score'
-    torch.save(state, save_path)
+    # torch.save(state, save_path)
 
     evaluator_hit = Evaluator(name='ogbl-collab')
     evaluator_mrr = Evaluator(name='ogbl-citation2')
