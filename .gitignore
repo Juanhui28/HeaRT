@@ -22,3 +22,4 @@ HeaRT_ddi/output_test
 __pycache__
 *.pyc
 .DS_Store
+*_cn.py
