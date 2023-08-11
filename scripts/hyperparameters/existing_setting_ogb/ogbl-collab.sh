@@ -14,7 +14,7 @@ python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic RA --use_va
 python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic shortest_path --use_valedges_as_input
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic katz_apro --use_valedges_as_input
+python main_heuristic_ogb.py --data_name ogbl-collab --use_heuristic katz_apro --use_valedges_as_input --path_len 3
 
 
 

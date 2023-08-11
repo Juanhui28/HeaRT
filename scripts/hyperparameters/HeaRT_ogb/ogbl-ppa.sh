@@ -13,7 +13,7 @@ python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic RA
 python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic shortest_path
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic katz_apro 
+python main_heuristic_ogb.py --data_name ogbl-ppa --use_heuristic katz_apro --path_len 2
 
 ##node2vec
 python main_gnn_ogb.py --data_name ogbl-ppa --gnn_model mlp_model --cat_n2v_feat --lr 0.001  --dropout 0  --num_layers 3 --num_layers_predictor 3   --hidden_channels 256  --epochs 9999 --eval_steps 1 --kill_cnt 100  --batch_size 65536 

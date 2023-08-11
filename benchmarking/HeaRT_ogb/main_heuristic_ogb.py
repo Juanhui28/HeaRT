@@ -115,10 +115,9 @@ def main():
 
     if hasattr(data, 'edge_weight'):
         if data.edge_weight != None:
-            edge_weight = data.edge_weight.to(torch.float)
+            # edge_weight = data.edge_weight.to(torch.float)
             edge_weight = data.edge_weight.view(-1).to(torch.float)
-            # train_edge_weight = split_edge['train']['weight']
-            # train_edge_weight = train_edge_weight.to(torch.float)
+           
         else:
             edge_weight = torch.ones(data.edge_index.size(1), dtype=int)
 
@@ -184,6 +183,13 @@ def main():
         with open(f'{args.input_dir}/{args.data_name}/heart_test_{args.filename}', "rb") as f:
             neg_test_edge = np.load(f)
             neg_test_edge = torch.from_numpy(neg_test_edge)
+        
+        idx = torch.tensor([1,0])
+        edge_index = torch.cat([edge_index, edge_index[idx]], dim=1)
+        edge_weight = torch.ones(edge_index.size(1), dtype=int)
+
+    A = ssp.csr_matrix((edge_weight, (edge_index[0], edge_index[1])), 
+                       shape=(node_num, node_num))
 
     if args.use_valedges_as_input:
         print('use validation!!!')

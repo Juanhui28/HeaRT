@@ -15,7 +15,7 @@ python main_heuristic_ogb.py --data_name ogbl-ddi --use_heuristic RA
 python main_heuristic_ogb.py --data_name ogbl-ddi --use_heuristic shortest_path
 
 ## katz
-python main_heuristic_ogb.py --data_name ogbl-ddi --use_heuristic katz_apro 
+python main_heuristic_ogb.py --data_name ogbl-ddi --use_heuristic katz_apro --path_len 2
 
 ##node2vec
 python main_node2vec_ddi.py --data_name ogbl-ddi --lr 0.001 --dropout 0.3  --num_layers 3  --hidden_channels 256 --epochs 9999 --eval_steps 1 --kill_cnt 100 --batch_size 65536  

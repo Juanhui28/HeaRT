@@ -171,8 +171,6 @@ def main():
         
         edge_weight = torch.ones(data.edge_index.size(1), dtype=int)
 
-    A = ssp.csr_matrix((edge_weight, (edge_index[0], edge_index[1])), 
-                       shape=(node_num, node_num))
     
 
     if args.data_name != 'ogbl-citation2':
@@ -206,8 +204,13 @@ def main():
 
         neg_test_edge = torch.stack([source.repeat_interleave(test_neg_edge.size(1)), 
                                 test_neg_edge.view(-1)])
+        idx = torch.tensor([1,0])
+        edge_index = torch.cat([edge_index, edge_index[idx]], dim=1)
+        edge_weight = torch.ones(edge_index.size(1), dtype=int)
 
-
+    A = ssp.csr_matrix((edge_weight, (edge_index[0], edge_index[1])), 
+                       shape=(node_num, node_num))
+    
         
 
     if args.use_valedges_as_input:
