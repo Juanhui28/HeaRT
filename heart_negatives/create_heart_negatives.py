@@ -85,7 +85,7 @@ def calc_feat_sim(data):
 
     We use cosine similarity
 
-    NOTE: Don't attempt this on OGB
+    NOTE: Don't attempt this on OGB since its expensive. Batch instead
     """
     print("Calculating Feature Similarity...")
     return cosine_similarity(data['x'].numpy(), data['x'].numpy())
@@ -124,7 +124,7 @@ def rank_and_merge_node(node_cn_scores, node_ppr_scores, node_feat_scores, true_
     agg_func = np.mean if args.agg == "mean" else np.min
 
     if node_feat_scores is not None:
-        node_feat_scores[true_pos_mask] = -1  # TODO: Is this already true?
+        # node_feat_scores[true_pos_mask] = -1  # TODO: Is this already true?
 
         # Nodes that are 0 for all scores. Needed later when selecting top K
         zero_nodes_score_mask = ((node_cn_scores == 0) & (node_ppr_scores == 0) & (node_feat_scores == 0)).numpy()
@@ -192,14 +192,21 @@ def rank_and_merge_edges(edges, cn_scores, ppr_scores, feat_sim_scores, data, ar
         target_cn_scores = cn_scores[target].to_dense().squeeze(0)
         target_ppr_scores = ppr_scores[target].to_dense().squeeze(0)
 
-        # Filter self-loops and positive samples by setting to -1
-        # Also filter edge we want to predict
         source_true_pos_mask = source_adj
-        source_true_pos_mask[source], source_true_pos_mask[target] = 1, 1
-        source_cn_scores[source_true_pos_mask], source_ppr_scores[source_true_pos_mask] = -1, -1 
-
         target_true_pos_mask = target_adj
+
+        # Don't remove true positive
+        # So just set all to 0
+        if args.keep_train_val:
+            source_true_pos_mask = torch.zeros_like(source_true_pos_mask)
+            target_true_pos_mask = torch.zeros_like(target_true_pos_mask)
+
+        # Include masking for self-loops
+        source_true_pos_mask[source], source_true_pos_mask[target] = 1, 1
         target_true_pos_mask[target], target_true_pos_mask[source] = 1, 1
+
+        # Filter samples by setting to -1
+        source_cn_scores[source_true_pos_mask], source_ppr_scores[source_true_pos_mask] = -1, -1 
         target_cn_scores[target_true_pos_mask], target_ppr_scores[target_true_pos_mask] =  -1, -1 
 
         if feat_sim_scores is not None:
@@ -255,7 +262,8 @@ def calc_all_heuristics(args):
 def main():
     parser = ArgumentParser(description="Create HeaRT negative samples")
     parser.add_argument("--dataset", help="Dataset to create samples for", type=str, required=True)
-    parser.add_argument("--use-val-in-test", action='store_true', default=False)
+    parser.add_argument("--use-val-in-test", help="Use validation in test. Only applies to Collab", action='store_true', default=False)
+    parser.add_argument("--keep-train-val", help="Keep train+valid samples instead of filtering", action='store_true', default=False)
 
     parser.add_argument("--cn-metric", help="Either 'RA' or 'CN'", type=str, default="RA")
     parser.add_argument("--agg", help="For combining ranks. Either 'mean' or 'min'", type=str, default="min")

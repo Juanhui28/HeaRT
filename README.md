@@ -82,6 +82,11 @@ A custom set of negative samples can be produced by running the `heart_negatives
 - The PPR parameters. This includes the tolerance used for approximating the PPR (`--eps` argument) and the teleporation probability (`--alpha` argument). `alpha` is fixed at 0.15 for all datasets. For the tolerance, `eps`, we recommend following the settings found in `scripts/HeaRT`.
 
 
+## Updates
+
+**November 3rd, 2023**
+* Modified the negative samples for ogbl-collab to **allow** train/valid positive samples to be negatives. Please see Appendix H in the paper for our rationale. 
+
 ## Cite
 ```
 @article{li2023evaluating,
