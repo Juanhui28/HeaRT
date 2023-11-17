@@ -85,7 +85,7 @@ A custom set of negative samples can be produced by running the `heart_negatives
 ## Updates
 
 **November 3rd, 2023**
-* Modified the negative samples for ogbl-collab to **allow** train/valid positive samples to be negatives. Please see Appendix H in the paper for our rationale. 
+* Modified the negative samples for ogbl-collab to **allow** train/valid positive samples to be negatives. Please see Appendix I in the paper for our rationale. 
 
 ## Cite
 ```
