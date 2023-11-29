@@ -1,6 +1,6 @@
 # HeaRT
 
-Official code for the paper ["Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking"](https://arxiv.org/pdf/2306.10453.pdf).
+Official code for the NeurIPS'23 paper ["Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking"](https://arxiv.org/pdf/2306.10453.pdf).
 
 
 ## Installation
@@ -89,10 +89,11 @@ A custom set of negative samples can be produced by running the `heart_negatives
 
 ## Cite
 ```
-@article{li2023evaluating,
+@inproceedings{
+  li2023evaluating,
   title={Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking},
   author={Li, Juanhui and Shomer, Harry and Mao, Haitao and Zeng, Shenglai and Ma, Yao and Shah, Neil and Tang, Jiliang and Yin, Dawei},
-  journal={arXiv preprint arXiv:2306.10453},
+  booktitle={Neural Information Processing Systems {NeurIPS}, Datasets and Benchmarks Track},
   year={2023}
 }
 ```
