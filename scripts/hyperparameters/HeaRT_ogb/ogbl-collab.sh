@@ -40,7 +40,7 @@ python main_neognn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --us
 python main_buddy_ogb.py  --data_name ogbl-collab  --lr 0.01 --l2 0  --label_dropout 0  --feature_dropout 0 --hidden_channels 256  --epochs 9999 --eval_steps 1 --kill_cnt 20 --save  --batch_size 65536 --model BUDDY
 
 ## peg
-python main_peg_ogb.py --PE_method 'DW' --use_valedges_as_input  --data_name ogbl-collab --lr 0.01  --dropout 0 --num_layers 3  --hidden_channels 256 --epochs 9999  --eval_steps 1 --kill_cnt 20   --batch_size 65536
+python main_peg_ogb.py --PE_method 'DW' --use_valedges_as_input  --data_name ogbl-collab --lr 0.001  --dropout 0.3 --num_layers 3  --hidden_channels 256 --epochs 9999  --eval_steps 1 --kill_cnt 20   --batch_size 65536
 
 ## ncn
 python main_ncn_ogb.py --dataset collab --predictor cn1   --xdp 0.25 --tdp 0.05 --pt 0.1 --gnnedp 0.25 --preedp 0.0 --gnnlr  0.001  --prelr 0.001  --predp 0. --gnndp  0.   --probscale 2.5 --proboffset 6.0 --alpha 1.05  --mplayers 3  --hiddim 256  --epochs 9999 --kill_cnt 20  --batch_size 65536  --ln --lnnn  --model gcn  --testbs 2048 --splitsize 16384 --maskinput --use_valedges_as_input   --res  --use_xlin  --tailact  
