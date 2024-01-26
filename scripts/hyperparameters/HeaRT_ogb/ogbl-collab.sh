@@ -25,7 +25,7 @@ python main_MF_collabppa.py  --data_name ogbl-collab --lr 0.001 --dropout 0. --n
 python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model mlp_model  --lr 0.001 --dropout 0 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
 
 ## gcn
-python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model GCN  --lr 0.001 --dropout 0.3 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
+python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model GCN  --lr 0.001 --dropout 0. --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
 
 ## GAT
 python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_model GAT  --lr 0.001 --dropout 0 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 100 --eval_steps 1  --batch_size 65536  
@@ -37,13 +37,13 @@ python main_gnn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --gnn_m
 python main_neognn_ogb.py  --data_name ogbl-collab  --use_valedges_as_input --use_2hop  --lr 0.01 --dropout 0.5 --num_layers 3 --hidden_channels 256  --num_layers_predictor 3 --epochs 9999 --kill_cnt 20 --eval_steps 1  --batch_size 1024 --test_batch_size 4096   
 
 ## buddy
-python main_buddy_ogb.py  --data_name ogbl-collab  --lr 0.001 --l2 0  --label_dropout 0  --feature_dropout 0 --hidden_channels 256  --epochs 9999 --eval_steps 1 --kill_cnt 20 --save  --batch_size 65536 --model BUDDY
+python main_buddy_ogb.py  --data_name ogbl-collab  --lr 0.01 --l2 0  --label_dropout 0  --feature_dropout 0 --hidden_channels 256  --epochs 9999 --eval_steps 1 --kill_cnt 20 --save  --batch_size 65536 --model BUDDY
 
 ## peg
 python main_peg_ogb.py --PE_method 'DW' --use_valedges_as_input  --data_name ogbl-collab --lr 0.01  --dropout 0 --num_layers 3  --hidden_channels 256 --epochs 9999  --eval_steps 1 --kill_cnt 20   --batch_size 65536
 
 ## ncn
-python main_ncn_ogb.py --dataset collab --predictor cn1   --xdp 0.25 --tdp 0.05 --pt 0.1 --gnnedp 0.25 --preedp 0.0 --gnnlr  0.001  --prelr 0.001  --predp 0.3 --gnndp  0.3   --probscale 2.5 --proboffset 6.0 --alpha 1.05  --mplayers 3  --hiddim 256  --epochs 9999 --kill_cnt 20  --batch_size 65536  --ln --lnnn  --model gcn  --testbs 2048 --splitsize 16384 --maskinput --use_valedges_as_input   --res  --use_xlin  --tailact  
+python main_ncn_ogb.py --dataset collab --predictor cn1   --xdp 0.25 --tdp 0.05 --pt 0.1 --gnnedp 0.25 --preedp 0.0 --gnnlr  0.001  --prelr 0.001  --predp 0. --gnndp  0.   --probscale 2.5 --proboffset 6.0 --alpha 1.05  --mplayers 3  --hiddim 256  --epochs 9999 --kill_cnt 20  --batch_size 65536  --ln --lnnn  --model gcn  --testbs 2048 --splitsize 16384 --maskinput --use_valedges_as_input   --res  --use_xlin  --tailact  
 
 ## ncnc
 python main_ncn_ogb.py --dataset collab --predictor incn1cn1   --xdp 0.25 --tdp 0.05 --pt 0.1 --gnnedp 0.25 --preedp 0.0 --gnnlr  0.001  --prelr 0.001  --predp 0 --gnndp  0   --probscale 2.5 --proboffset 6.0 --alpha 1.05  --mplayers 3  --hiddim 256  --epochs 9999 --kill_cnt 20  --batch_size 65536  --ln --lnnn  --model gcn  --testbs 2048 --splitsize 16384 --maskinput --use_valedges_as_input   --res  --use_xlin  --tailact  
