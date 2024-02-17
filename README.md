@@ -99,6 +99,8 @@ A custom set of negative samples can be produced by running the `heart_negatives
   booktitle={Neural Information Processing Systems {NeurIPS}, Datasets and Benchmarks Track},
   year={2023}
 }
+```
+```
 @article{mao2023revisiting,
   title={Revisiting link prediction: A data perspective},
   author={Mao, Haitao and Li, Juanhui and Shomer, Harry and Li, Bingheng and Fan, Wenqi and Ma, Yao and Zhao, Tong and Shah, Neil and Tang, Jiliang},
