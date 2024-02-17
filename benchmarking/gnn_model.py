@@ -404,3 +404,196 @@ class DGCNN(torch.nn.Module):
         x = self.lin2(x)
         return x
 
+
+
+class GCN_seal(torch.nn.Module):
+    def __init__(self, hidden_channels, num_layers, max_z, train_dataset, 
+                 use_feature=False, only_feature=False,node_embedding=None, dropout=0.5):
+        super(GCN_seal, self).__init__()
+        self.use_feature = use_feature
+        self.only_feature = only_feature
+        self.node_embedding = node_embedding
+        self.max_z = max_z
+        self.z_embedding = Embedding(self.max_z, hidden_channels)
+
+        self.convs = ModuleList()
+        initial_channels = hidden_channels
+        if self.use_feature:
+            initial_channels += train_dataset.num_features
+            
+        if self.only_feature:
+            initial_channels = train_dataset.num_features
+
+        if self.node_embedding is not None:
+            initial_channels += node_embedding.embedding_dim
+        
+            
+        self.convs.append(GCNConv(initial_channels, hidden_channels))
+        for _ in range(num_layers - 1):
+            self.convs.append(GCNConv(hidden_channels, hidden_channels))
+
+        self.dropout = dropout
+        self.lin1 = Linear(hidden_channels, hidden_channels)
+        self.lin2 = Linear(hidden_channels, 1)
+        self.invest = 1
+
+    def reset_parameters(self):
+        for conv in self.convs:
+            conv.reset_parameters()
+
+    def forward(self, z, edge_index, batch, x=None, edge_weight=None, node_id=None):
+        z_emb = self.z_embedding(z)
+        tmpx = x
+        if z_emb.ndim == 3:  # in case z has multiple integer labels
+            z_emb = z_emb.sum(dim=1)
+        if self.use_feature and x is not None:
+            x = torch.cat([z_emb, x.to(torch.float)], 1)
+        else:
+            if self.invest == 1:
+                print('only struct')
+            x = z_emb
+        if self.only_feature:    ####
+            if self.invest == 1:
+                print('only feat')
+            x = tmpx
+        if self.node_embedding is not None and node_id is not None:
+            n_emb = self.node_embedding(node_id)
+            x = torch.cat([x, n_emb], 1)
+        for conv in self.convs[:-1]:
+            x = conv(x, edge_index, edge_weight)
+            x = F.relu(x)
+            x = F.dropout(x, p=self.dropout, training=self.training)
+        x = self.convs[-1](x, edge_index, edge_weight)
+        if True:  # center pooling
+            _, center_indices = np.unique(batch.cpu().numpy(), return_index=True)
+            x_src = x[center_indices]
+            x_dst = x[center_indices + 1]
+            x = (x_src * x_dst)
+            x = F.relu(self.lin1(x))
+            x = F.dropout(x, p=self.dropout, training=self.training)
+            x = self.lin2(x)
+        else:  # sum pooling
+            x = global_add_pool(x, batch)
+            x = F.relu(self.lin1(x))
+            x = F.dropout(x, p=self.dropout, training=self.training)
+            x = self.lin2(x)
+
+        self.invest = 0
+        return x
+
+class SAGE_seal(torch.nn.Module):
+    def __init__(self, hidden_channels, num_layers, max_z, train_dataset=None, 
+                 use_feature=False, only_feature=False, node_embedding=None, dropout=0.5):
+        super(SAGE_seal, self).__init__()
+        self.use_feature = use_feature
+        self.only_feature = only_feature
+
+        self.node_embedding = node_embedding
+        self.max_z = max_z
+        self.z_embedding = Embedding(self.max_z, hidden_channels)
+
+        self.convs = ModuleList()
+        initial_channels = hidden_channels
+        if self.use_feature:
+            initial_channels += train_dataset.num_features
+
+        if self.only_feature:
+            initial_channels = train_dataset.num_features
+
+
+        if self.node_embedding is not None:
+            initial_channels += node_embedding.embedding_dim
+        self.convs.append(SAGEConv(initial_channels, hidden_channels))
+        for _ in range(num_layers - 1):
+            self.convs.append(SAGEConv(hidden_channels, hidden_channels))
+
+        self.dropout = dropout
+        self.lin1 = Linear(hidden_channels, hidden_channels)
+        self.lin2 = Linear(hidden_channels, 1)
+        self.invest = 1
+
+    def reset_parameters(self):
+        for conv in self.convs:
+            conv.reset_parameters()
+
+    def forward(self, z, edge_index, batch, x=None, edge_weight=None, node_id=None):
+        z_emb = self.z_embedding(z)
+        tmpx = x
+        if z_emb.ndim == 3:  # in case z has multiple integer labels
+            z_emb = z_emb.sum(dim=1)
+        if self.use_feature and x is not None:
+            x = torch.cat([z_emb, x.to(torch.float)], 1)
+    
+        else:
+            if self.invest == 1:
+                print('only struct')
+            x = z_emb
+        if self.only_feature:    ####
+            if self.invest == 1:
+                print('only feat')
+            x = tmpx
+
+        if self.node_embedding is not None and node_id is not None:
+            n_emb = self.node_embedding(node_id)
+            x = torch.cat([x, n_emb], 1)
+        for conv in self.convs[:-1]:
+            x = conv(x, edge_index)
+            x = F.relu(x)
+            x = F.dropout(x, p=self.dropout, training=self.training)
+        x = self.convs[-1](x, edge_index)
+        if True:  # center pooling
+            _, center_indices = np.unique(batch.cpu().numpy(), return_index=True)
+            x_src = x[center_indices]
+            x_dst = x[center_indices + 1]
+            x = (x_src * x_dst)
+            x = F.relu(self.lin1(x))
+            x = F.dropout(x, p=self.dropout, training=self.training)
+            x = self.lin2(x)
+        else:  # sum pooling
+            x = global_add_pool(x, batch)
+            x = F.relu(self.lin1(x))
+            x = F.dropout(x, p=self.dropout, training=self.training)
+            x = self.lin2(x)
+
+        self.invest = 0
+        return x
+
+class DecoupleSEAL(torch.nn.Module):
+    def __init__(self, hidden_channels, num_layers, max_z, k, train_dataset, dynamic_train, 
+                 node_embedding, dropout, gnn_model):
+        super(DecoupleSEAL, self).__init__()
+        
+        if gnn_model == 'DGCNN':
+            self.gnn1 =  DGCNN(hidden_channels, num_layers, max_z, k, train_dataset, 
+                 dynamic_train, use_feature=False,  only_feature=False, node_embedding=node_embedding) ###struct
+
+
+            self.gnn2 =  DGCNN(hidden_channels, num_layers, max_z, k, train_dataset, 
+                 dynamic_train, use_feature=False,  only_feature=True, node_embedding=node_embedding) ###feature
+
+        if gnn_model == 'GCN':
+            self.gnn1 = GCN_seal(hidden_channels, num_layers, max_z, train_dataset, use_feature=False, only_feature=False,node_embedding=node_embedding, dropout=dropout)  ## structure
+            self.gnn2 = GCN_seal(hidden_channels, num_layers, max_z, train_dataset, use_feature=False, only_feature=True, node_embedding=node_embedding, dropout=dropout)  ###feature
+
+        if gnn_model == 'SAGE':
+            self.gnn1 = SAGE_seal(hidden_channels, num_layers, max_z, train_dataset, use_feature=False, only_feature=False,node_embedding=node_embedding, dropout=dropout)  ## structure
+            self.gnn2 = SAGE_seal(hidden_channels, num_layers, max_z, train_dataset, use_feature=False, only_feature=True, node_embedding=node_embedding, dropout=dropout)  ###feature
+
+
+        self.alpha = torch.nn.Parameter(torch.FloatTensor([0, 0]))
+
+    def reset_parameters(self):
+        torch.nn.init.constant_(self.alpha, 0)
+        self.gnn1.reset_parameters()
+        self.gnn2.reset_parameters()
+    
+    def forward(self,z, edge_index, batch, x=None, edge_weight=None, node_id=None):
+
+        logit1 = self.gnn1(z, edge_index, batch, x, edge_weight, node_id)
+        logit2 = self.gnn2(z, edge_index, batch, x, edge_weight, node_id)
+
+        alpha = torch.softmax(self.alpha, dim=0)
+
+        scores = alpha[0]*logit1 + alpha[1]*logit2
+
+        return scores

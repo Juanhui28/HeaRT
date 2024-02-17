@@ -57,3 +57,6 @@ python main_ncn_collabppa.py --predictor incn1cn1 --dataset collab  --xdp 0.25 -
 ## seal
 python main_seal_ogb.py --use_valedges_as_input  --data_name ogbl-collab  --lr  0.001  --num_layers 3  --num_layers_predictor 3 --hidden_channels 256 --epochs 9999  --eval_steps 1  --kill_cnt 20  --batch_size 32   --num_hops 1 --train_percent 15 
 
+
+############# decoupled SEAL
+python main_seal_decouple_ogb.py  --use_valedges_as_input  --data_name ogbl-collab   --gnn_model 'GCN' --node_label 'drnl' --lr  0.01 --dropout 0.5 --l2 0.  --num_layers 3  --num_layers_predictor 3 --hidden_channels 256 --epochs 9999  --eval_steps 1  --kill_cnt 20  --batch_size 32   --num_hops 1 --train_percent 15 

@@ -62,3 +62,6 @@ python main_seal_CoraCiteseerPubmed.py  --data_name pubmed  --lr 0.001  --num_la
 config=../baseline_models/nbfnet/data_config/pubmed.yaml
 python main_nbfnet_CoraCiteseerPubmed.py --data_name pubmed --lr 0.001 --dropout 0. --input_dim 32 --hidden_dims 32 32 32 32 32 32  --config $config   --epochs 9999 --batch_size 8  --gpus [0] 
 
+############# decoupled SEAL
+python main_seal_decouple_CoraCiteseerPubmed.py  --data_name pubmed  --gnn_model 'SAGE' --node_label 'drnl'  --lr 0.01 --dropout 0.1  --num_layers 3 --hidden_channels 256 --dynamic_train  --num_hops 3   --epochs 9999 --eval_steps 1 --kill_cnt 20 --batch_size 512 
+

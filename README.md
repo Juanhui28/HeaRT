@@ -1,6 +1,6 @@
 # HeaRT
 
-Official code for the NeurIPS'23 paper ["Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking"](https://arxiv.org/pdf/2306.10453.pdf).
+Official code for the NeurIPS'23 paper ["Evaluating Graph Neural Networks for Link Prediction: Current Pitfalls and New Benchmarking"](https://arxiv.org/pdf/2306.10453.pdf), and ICLR'24 paper ["Revisiting Link Prediction: A Data Perspective"](https://arxiv.org/pdf/2310.00793.pdf).
 
 
 ## Installation
@@ -87,6 +87,9 @@ A custom set of negative samples can be produced by running the `heart_negatives
 **November 3rd, 2023**
 * Modified the negative samples for ogbl-collab to **allow** train/valid positive samples to be negatives. Please see Appendix I in the paper for our rationale. 
 
+**Feb 17th, 2024**
+* Uploaded the implementation for the decoupled SEAL in the ICLR 2024 paper ["Revisiting Link Prediction: A Data Perspective"](https://arxiv.org/pdf/2310.00793.pdf). The commands are available in the **`scripts/hyparameters`** under the existing setting.
+
 ## Cite
 ```
 @inproceedings{
@@ -95,5 +98,11 @@ A custom set of negative samples can be produced by running the `heart_negatives
   author={Li, Juanhui and Shomer, Harry and Mao, Haitao and Zeng, Shenglai and Ma, Yao and Shah, Neil and Tang, Jiliang and Yin, Dawei},
   booktitle={Neural Information Processing Systems {NeurIPS}, Datasets and Benchmarks Track},
   year={2023}
+}
+@article{mao2023revisiting,
+  title={Revisiting link prediction: A data perspective},
+  author={Mao, Haitao and Li, Juanhui and Shomer, Harry and Li, Bingheng and Fan, Wenqi and Ma, Yao and Zhao, Tong and Shah, Neil and Tang, Jiliang},
+  journal={The Twelfth International Conference on Learning Representations},
+  year={2024}
 }
 ```
