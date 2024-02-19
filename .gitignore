@@ -16,6 +16,7 @@ HeaRT_ogb/output_test
 HeaRT_ddi/output
 HeaRT_ddi/dataset
 HeaRT_ddi/output_test
+dataset
 /.idea
 /.vscode
 /doc/build

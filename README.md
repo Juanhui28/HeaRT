@@ -100,9 +100,11 @@ A custom set of negative samples can be produced by running the `heart_negatives
   year={2023}
 }
 ```
+```
 @article{mao2023revisiting,
   title={Revisiting link prediction: A data perspective},
   author={Mao, Haitao and Li, Juanhui and Shomer, Harry and Li, Bingheng and Fan, Wenqi and Ma, Yao and Zhao, Tong and Shah, Neil and Tang, Jiliang},
   journal={The Twelfth International Conference on Learning Representations},
   year={2024}
 }
+```
