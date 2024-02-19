@@ -321,19 +321,6 @@ def main():
     if args.data_name == 'ogbl-citation2': directed=True
     else: directed = False
 
-    if args.use_valedges_as_input:
-        val_edge_index = split_edge['valid']['edge'].t()
-        if not directed:
-            val_edge_index = to_undirected(val_edge_index)
-        
-        full_edge_index = torch.cat([data.edge_index, val_edge_index], dim=-1)
-
-        val_edge_weight = torch.ones([val_edge_index.size(1), 1], dtype=torch.float)
-        edge_weight = torch.cat([data.edge_weight, val_edge_weight], 0)
- 
-        data.edge_index = full_edge_index
-        data.edge_weight = edge_weight
-
 
     if not args.dynamic_train and not args.dynamic_val and not args.dynamic_test:
         args.num_workers = 0
@@ -372,6 +359,21 @@ def main():
         max_nodes_per_hop=args.max_nodes_per_hop, 
         directed=directed, 
     )
+
+    if args.use_valedges_as_input:
+        val_edge_index = split_edge['valid']['edge'].t()
+        if not directed:
+            val_edge_index = to_undirected(val_edge_index)
+        
+        full_edge_index = torch.cat([data.edge_index, val_edge_index], dim=-1)
+
+        val_edge_weight = torch.ones([val_edge_index.size(1), 1], dtype=torch.float)
+        edge_weight = torch.cat([data.edge_weight, val_edge_weight], 0)
+ 
+        data.edge_index = full_edge_index
+        data.edge_weight = edge_weight
+
+
     dataset_class = 'SEALDynamicDataset' if args.dynamic_test else 'SEALDataset'
     test_dataset = eval(dataset_class)(
         path, 
