@@ -1,3 +1,4 @@
 #!/bin/bash
 
-curl https://cse.msu.edu/~shomerha/HeaRT-Data/dataset.tar.gz | tar -xvz
+wget https://zenodo.org/records/22184581/files/HeaRT.tar.gz
+tar -xvf HeaRT.tar.gz
